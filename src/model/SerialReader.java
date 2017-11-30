@@ -16,7 +16,7 @@ import java.io.InputStream;
 public class SerialReader implements Runnable{
     //Canal de entrada RX
     private InputStream in;
-    
+    private boolean live = true;
     /**
      * Constructor del hilo.
      * @param in Canal de entrada del puerto serial.
@@ -27,6 +27,24 @@ public class SerialReader implements Runnable{
     }
 
     /**
+     * Metodo para consultar si el hilo sige activo
+     * @return boolean true or false
+     */
+    public boolean isLive() {
+        return live;
+    }
+
+    /**
+     * Metodo para setear si el hilo seguira con vida
+     * @param live boolean true or false
+     */
+    public void setLive(boolean live) {
+        this.live = live;
+    }
+
+    
+    
+    /**
      * Metodo que se ejecuta al iniciar el hilo.
      */
     public void run ()
@@ -34,24 +52,22 @@ public class SerialReader implements Runnable{
         byte[] buffer = new byte[1];
         int len = -1;
         String msg;
-        char[] arr;
-        int c;
+        //char[] arr;
+        int c ;
         Trama trama = new Trama();
         try
         {
             //ciclo de lectura del buffer de entrada
-            while ( ( len = this.in.read(buffer)) > -1 )
+            while ( ( len = this.in.read(buffer)) > -1 && live)
             {
 
                 msg = new String(buffer,0,len);
-                arr = msg.toCharArray();
-
+                
                 //Segmento donde se maneja cuando se recibe cualquier caracter.
-                if(arr.length > 0){
+                if(msg.length() > 0){
                     
-                    c = (int) arr[0];
-                    //Utils.printMSG(c);
-
+                    c = Utils.unsignedToBytes(buffer[0]);
+                     
                     /* Se llena la 'trama' de tamaño 4 para comprobar mensaje valido
                      * y caso de ser valido se procesa.
                     */

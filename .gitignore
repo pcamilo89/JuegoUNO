@@ -5,6 +5,7 @@
 /nbproject/private/*
 /build/*
 /dist/*
+*.log
 
 ## generic files to ignore
 *~

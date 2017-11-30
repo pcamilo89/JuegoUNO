@@ -6,6 +6,8 @@ import gnu.io.SerialPort;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase que maneja Puerto Serial y su comunicacion.
@@ -17,28 +19,52 @@ public class SerialComm {
     //Canal de salida TX
     private static OutputStream out;
     //Puerto serial
-    private static SerialPort serialPort;
+    private static SerialPort serialPort = null;
 
+    /**
+     * Metodo para obtener stream de entrada
+     * @return stream de entrada
+     */
     public static InputStream getIn() {
         return in;
     }
 
+    /**
+     * Metodo para asignar stream de entrada
+     * @param in stream de entrada
+     */
     public static void setIn(InputStream in) {
         SerialComm.in = in;
     }
 
+    /**
+     * Metodo para obtener stream de salida
+     * @return stream de salida
+     */
     public static OutputStream getOut() {
         return out;
     }
 
+    /**
+     * Metodo para asignar stream de salida
+     * @param out stream de salida
+     */
     public static void setOut(OutputStream out) {
         SerialComm.out = out;
     }
 
+    /**
+     * Metodo para obtener puerto serial
+     * @return puerto serial
+     */
     public static SerialPort getSerialPort() {
         return serialPort;
     }
 
+    /**
+     * Metodo para asignar puerto serial
+     * @param serialPort puerto serial
+     */
     public static void setSerialPort(SerialPort serialPort) {
         SerialComm.serialPort = serialPort;
     }
@@ -48,7 +74,7 @@ public class SerialComm {
      * @param portName String con el nombre del puerto
      * @throws Exception 
      */
-    static void connect ( String portName ) throws Exception
+    public static void connect ( String portName ) throws Exception
     {
         CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
         if ( portIdentifier.isCurrentlyOwned() )
@@ -82,8 +108,9 @@ public class SerialComm {
     /**
      * Metodo para cerrar la conneccion del puerto serial.
      */
-    static void close(){
+    public static void close(){
         serialPort.close();
+        serialPort = null;
     }
     
     /**
@@ -91,20 +118,29 @@ public class SerialComm {
      * @param b byte de informacion a ser enviado
      * @throws IOException 
      */
-    static void sendByte(byte b) throws IOException{
-        out.write(b);
+    public static void sendByte(byte b){
+        try {
+            out.write(b);
+        } catch (IOException ex) {
+            Logger.getLogger(SerialComm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
      * Metodo de envio de trama
-     * @param control segmento de control
-     * @param information segmento de informacion
+     * @param trama
      * @throws IOException 
      */
-    static void sendTrama(Trama trama) throws IOException{
+    public static void sendTrama(Trama trama){
         if(trama.checkTrama()){
+            //System.out.println("Envio: ");
+            //trama.printTrama();
             byte[] array = {(byte) Utils.TRAMA_FLAG,(byte) trama.getControl(), (byte) trama.getInformation(), (byte) Utils.TRAMA_FLAG};
-            out.write(array);
+            try {
+                out.write(array);
+            } catch (IOException ex) {
+                Logger.getLogger(SerialComm.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
     }

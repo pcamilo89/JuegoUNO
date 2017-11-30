@@ -4,16 +4,20 @@
  * and open the template in the editor.
  */
 
-package model;
+package test;
 
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.SerialComm;
+import model.SerialReader;
+import model.Trama;
+
 /**
  *
  * @author Camilo
  */
-public class Main {
+public class TestEnvioTrama {
     public static void main(String[] args) throws IOException, InterruptedException{
         //Iniciando SerialComm
         try {
@@ -26,14 +30,9 @@ public class Main {
         new Thread(reader).start();
         
         System.out.println("Serial Comm Iniciado.");
-        
-//        //test de envio de informacion.
-//        int y=65;
-//        for(int i=0;i<5;i++){
-//            Thread.sleep(2000);
-//            SerialComm.sendTrama(i+y,y);
-//        }
-        
-        //SerialComm.close();
+        Trama trama = new Trama(128, 240);
+        SerialComm.sendTrama(trama);
+        reader.setLive(false);
+        SerialComm.close();
     }
 }
