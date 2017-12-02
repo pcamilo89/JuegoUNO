@@ -32,6 +32,9 @@ public class Card {
      * @return Color de la carta
      */
     public Color getColor() {
+        if(color==Color.NONE){
+            return Color.AZUL;
+        }
         return color;
     }
 

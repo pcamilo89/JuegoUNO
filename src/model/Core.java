@@ -26,7 +26,7 @@ public class Core {
     private static Deck drop = new Deck();
     
     //array de manos de jugadores
-    private static Deck[] players = new Deck[4];
+    private static final Deck[] players = new Deck[4];
 
     /**
      * Metodo para obtener valor de la fase
@@ -249,6 +249,17 @@ public class Core {
             return true;
         }
         return false;
+    }
+    
+    public static void printTable(){
+        
+        for(int i=0;i<players.length;i++){
+            System.out.println("Player: "+i);
+            players[i].printDeck();
+        }
+        System.out.println("Drop: ");
+        getDrop().printDeck();
+        getDrop().size();
     }
     
 }

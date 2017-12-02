@@ -76,14 +76,15 @@ public class Deck {
     /**
      * Metodo que imprime las cartas del mazo
      */
-    public void showCards(){
+    public void printDeck(){
         Iterator myIterator;
         myIterator = Deck.iterator();
         Card card;
         while (myIterator.hasNext())
         {
-            card = (Card)myIterator.next();
-            System.out.println(card.toString());
+            card = (Card) myIterator.next();
+            if(card!=null)
+                System.out.println(card.toString());
         }
     }
     
@@ -113,6 +114,29 @@ public class Deck {
         return card;
     }
     
+    public Card showCard(Color color,Value value){
+     
+        //cambiar color para carta +4 y CambiaColor
+        if(value.equals(Value.MAS_CUATRO)||value.equals(Value.CAMBIA_COLOR)){
+            color = Color.NONE;
+
+        }
+        //Card cardActual;
+        Card card = null;
+        for (Card i :  this.Deck) {
+            if(i.getColor().equals(color) && i.getValue().equals(value)){
+                card = i;
+                break;
+                
+            }
+        }
+        return card;
+    }
+    
+    public boolean removeCard(Card card){
+        return Deck.remove(card);
+    }
+    
     /**
      * Metodo para obtener la carta especificada del mazo retirandola del mismo
      * @param color Color de la carta
@@ -120,21 +144,9 @@ public class Deck {
      * @return Carta proveiente del mazo
      */
     public Card getCard(Color color,Value value){
-        
-        Iterator myIterator;
-        myIterator = Deck.iterator();
-        Card card = null;
-        Card cardActual = null;
-        while (myIterator.hasNext())
-        {
-            cardActual = (Card)myIterator.next();
-            if(cardActual.getColor()==color && cardActual.getValue()==value){
-                card = cardActual;
-                break;
-            }
-        }
-        if(card!= null)
-            Deck.remove(card);
+        Card card = showCard(color, value);
+
+        removeCard(card);
         return card;
     }
     

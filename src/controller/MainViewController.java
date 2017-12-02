@@ -54,4 +54,20 @@ public class MainViewController {
     public static void clearInfoLabel(){
         mainView.getjLInfo().setText("");
     }
+    
+    public static void setCardsLabel(String text){
+        mainView.getjLCards().setText(text);
+    }
+    
+    public static void clearCardsLabel(){
+        mainView.getjLCards().setText("");
+    }
+    
+    public static void setPlayerLabel(String text){
+        mainView.getjLPlayer().setText(text);
+    }
+    
+    public static void clearPlayerLabel(){
+        mainView.getjLPlayer().setText("");
+    }
 }

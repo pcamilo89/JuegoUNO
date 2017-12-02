@@ -6,7 +6,9 @@
 
 package test;
 
+import model.Card;
 import model.Core;
+import model.Utils;
 
 public class TestRecargaMazo {
 
@@ -24,7 +26,7 @@ public class TestRecargaMazo {
         Core.getDrop().addCard(Core.getDraw().getFirstCard());
         Core.getDrop().addCard(Core.getDraw().getLastCard());
         Core.getDrop().addCard(Core.getDraw().getFirstCard());
-        Core.getDrop().showCards();
+        Core.getDrop().printDeck();
         
         
 
@@ -41,9 +43,17 @@ public class TestRecargaMazo {
         }
         System.out.println("Cartas de Draw Despues: "+Core.getDraw().size());
         System.out.println("Cartas de Drop Despues: "+Core.getDrop().size());
-        Core.getDrop().showCards();
+        Core.getDrop().printDeck();
         
         System.out.println("Cartas Draw al final de todo");
-        Core.getDraw().showCards();
+        Core.getDraw().printDeck();
+        
+        System.out.println("\n\nPrueba de dos metodos y no uno solo");
+        Card card = Core.getDraw().showCard(Utils.Color.ROJO, Utils.Value.DOS);
+        System.out.println(Core.getDraw().removeCard(card));
+        card = Core.getDraw().showCard(Utils.Color.ROJO, Utils.Value.DOS);
+        System.out.println(Core.getDraw().removeCard(card));
+        System.out.println(Core.getDraw().removeCard(card));
+        System.out.println(card);
     }
 }

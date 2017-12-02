@@ -16,14 +16,17 @@ import model.Utils;
  * @author Camilo
  */
 public class TestRandomGenerator {
+    
     public static void main(String[] args){
+        int num;
         while(true){
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
             } catch (InterruptedException ex) {
                 Logger.getLogger(TestRandomGenerator.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println(Utils.getRandomint(Core.getMax()+1));
+            num = Utils.getRandomint(Core.getMax()+1);
+            System.out.println(num+" "+Utils.intToBinary(num,4));
         }
     }
 }

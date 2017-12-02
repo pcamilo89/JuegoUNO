@@ -8,6 +8,8 @@ package model;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Hilo de escucha al canal de entrada RX del puerto serial
@@ -49,15 +51,16 @@ public class SerialReader implements Runnable{
      */
     public void run ()
     {
-        byte[] buffer = new byte[1];
-        int len = -1;
-        String msg;
-        //char[] arr;
-        int c ;
-        Trama trama = new Trama();
-        try
-        {
+        try {
+            byte[] buffer = new byte[1];
+            int len = -1;
+            String msg;
+            //char[] arr;
+            int c ;
+            Trama trama = new Trama();
+            
             //ciclo de lectura del buffer de entrada
+            //while ( ( len = this.in.read(buffer)) > -1 && live)
             while ( ( len = this.in.read(buffer)) > -1 && live)
             {
 
@@ -67,22 +70,26 @@ public class SerialReader implements Runnable{
                 if(msg.length() > 0){
                     
                     c = Utils.unsignedToBytes(buffer[0]);
-                     
+                    
+                    
+                    
                     /* Se llena la 'trama' de tamaño 4 para comprobar mensaje valido
-                     * y caso de ser valido se procesa.
+                    * y caso de ser valido se procesa.
                     */
                     trama.fillTrama(c);
                     if(trama.checkTrama()){
                         //trama.printTrama();
                         Protocol.processTrama(trama);
                     }
+                    
+                    //EXPERIMENTAL prueba para limpiar buffer y caracteres nulos
+                    //buffer[0]=0;
                 }
 
             }
+        } catch (IOException ex) {
+            Logger.getLogger(SerialReader.class.getName()).log(Level.SEVERE, null, ex);
         }
-        catch ( IOException e )
-        {
-            e.printStackTrace();
-        }            
+                 
     }
 }

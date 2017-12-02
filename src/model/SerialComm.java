@@ -88,7 +88,7 @@ public class SerialComm {
             if ( commPort instanceof SerialPort )
             {
                 serialPort = (SerialPort) commPort;
-                serialPort.setSerialPortParams(2400,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
+                serialPort.setSerialPortParams(Utils.BUFFER_SPEED,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
                 
                 in = serialPort.getInputStream();
                 out = serialPort.getOutputStream();
@@ -115,8 +115,7 @@ public class SerialComm {
     
     /**
      * Metodo para enviar un byte de informacion.
-     * @param b byte de informacion a ser enviado
-     * @throws IOException 
+     * @param b byte de informacion a ser enviado 
      */
     public static void sendByte(byte b){
         try {
@@ -128,8 +127,7 @@ public class SerialComm {
     
     /**
      * Metodo de envio de trama
-     * @param trama
-     * @throws IOException 
+     * @param trama 
      */
     public static void sendTrama(Trama trama){
         if(trama.checkTrama()){

@@ -30,8 +30,8 @@ public class Utils {
     
     public static final int PHASE_START = 0;
     public static final int PHASE_INITIAL_CARDS = 1;
-    public static final int PHASE_BOARD = 3;
-    public static final int PHASE_GAME = 4;
+    public static final int PHASE_BOARD = 2;
+    public static final int PHASE_GAME = 3;
     
     public static final String INFO_FILLER_5 = "10000";
     public static final String INFO_FILLER_8 = "10000000";
@@ -41,6 +41,7 @@ public class Utils {
     public static final int TRAMA_INFO = 128;
     
     public static final int BYTE_SIZE = 8;
+    public static final int BUFFER_SPEED = 2400;
     
     
     public static void printMSG(int c){
@@ -118,7 +119,10 @@ public class Utils {
         int num=0;
         for (Color i : Color.values()) {
             if(i.equals(color)){
-                return num;
+                if(color.equals(Color.NONE))
+                    return 0;
+                else
+                    return num;
             }
             num++;
         }

@@ -25,6 +25,22 @@ public class MainView extends javax.swing.JFrame {
         MainViewController.load(this);
     }
 
+    public JLabel getjLPlayer() {
+        return jLPlayer;
+    }
+
+    public void setjLPlayer(JLabel jLPlayer) {
+        this.jLPlayer = jLPlayer;
+    }
+
+    public JLabel getjLCards() {
+        return jLCards;
+    }
+
+    public void setjLCards(JLabel jLCards) {
+        this.jLCards = jLCards;
+    }
+
     public JTextField getjTFPort() {
         return jTFPort;
     }
@@ -82,6 +98,8 @@ public class MainView extends javax.swing.JFrame {
         jBPortStart = new javax.swing.JButton();
         jBPortStop = new javax.swing.JButton();
         jLInfo = new javax.swing.JLabel();
+        jLCards = new javax.swing.JLabel();
+        jLPlayer = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jBGameStart = new javax.swing.JButton();
 
@@ -110,24 +128,39 @@ public class MainView extends javax.swing.JFrame {
         jLInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLInfo.setPreferredSize(new java.awt.Dimension(200, 30));
 
+        jLCards.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        jLCards.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLCards.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLCards.setPreferredSize(new java.awt.Dimension(300, 30));
+
+        jLPlayer.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        jLPlayer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLPlayer.setPreferredSize(new java.awt.Dimension(100, 25));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jBPortStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLPuerto)
+                        .addGap(0, 50, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLCards, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(50, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jBPortStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLPuerto)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTFPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jBPortStop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTFPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jBPortStop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(100, Short.MAX_VALUE)
-                .addComponent(jLInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                        .addComponent(jLPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,12 +168,15 @@ public class MainView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTFPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLPuerto))
+                    .addComponent(jLPuerto)
+                    .addComponent(jLPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBPortStart)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBPortStop)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addComponent(jLCards, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -215,7 +251,9 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton jBGameStart;
     private javax.swing.JButton jBPortStart;
     private javax.swing.JButton jBPortStop;
+    private javax.swing.JLabel jLCards;
     private javax.swing.JLabel jLInfo;
+    private javax.swing.JLabel jLPlayer;
     private javax.swing.JLabel jLPuerto;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
