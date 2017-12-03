@@ -72,7 +72,7 @@ public class SerialComm {
     /**
      * Metodo de Conneccion por puerto serial que recibe el nombre del puerto a conectar.
      * @param portName String con el nombre del puerto
-     * @throws Exception 
+     * @throws Exception excepcion en caso de coneccion fallida
      */
     public static void connect ( String portName ) throws Exception
     {
@@ -127,7 +127,7 @@ public class SerialComm {
     
     /**
      * Metodo de envio de trama
-     * @param trama 
+     * @param trama trama a enviar
      */
     public static void sendTrama(Trama trama){
         if(trama.checkTrama()){

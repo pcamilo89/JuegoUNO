@@ -32,9 +32,6 @@ public class Card {
      * @return Color de la carta
      */
     public Color getColor() {
-        if(color==Color.NONE){
-            return Color.AZUL;
-        }
         return color;
     }
 
@@ -64,11 +61,19 @@ public class Card {
 
     /**
      * Metodo para imprimir una carta como string
-     * @return 
+     * @return String con informacion de la carta
      */
     @Override
     public String toString() {
         return "Card{" + "color=" + color + ", value=" + value + '}';
     }
     
+    /**
+     * Metodo que chequea si la carta es +4 o cambia color que tenga el color correcto.
+     */
+    public void checkCard(){
+        if(value.equals(Value.CAMBIA_COLOR)||value.equals(Value.MAS_CUATRO)){
+            color = Color.NONE;
+        }
+    }
 }

@@ -15,12 +15,15 @@ import model.SerialReader;
 import model.Utils;
 
 /**
- * Clase principal donde se inicializa y e
+ * Clase principal donde se inicializa el juego
  * @author Camilo
  */
 public class Main {
     public static SerialReader reader = null;
     
+    /**
+     * Metodo para inicializar el el puerto y coneccion asi como parametros iniciales
+     */
     public static void startApp(){
         try {
             if(SerialComm.getSerialPort() == null&&reader==null){
@@ -39,6 +42,9 @@ public class Main {
         Core.setPlayers();
     }
     
+    /**
+     * Metodo para detener la coneccion y el hilo de escucha
+     */
     public static void stopApp(){
        if(SerialComm.getSerialPort() != null&&reader!=null){
            //Primero cerrar hilo de esucha
@@ -51,6 +57,9 @@ public class Main {
        }
     }
     
+    /**
+     * Metodo que establece el look por defecto de la aplicacion
+     */
     public static void setLookAndFeel(){
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -74,19 +83,15 @@ public class Main {
         }
     }
     
+    /**
+     * Metodo principal de ejecucion
+     * @param args parametros de entrada
+     */
     public static void main(String[] args){
-        //Iniciando SerialComm
+        //Inicializacion de interfaz 
         setLookAndFeel();
         MainView mainView = new MainView();
         mainView.setVisible(true);
-        
-//        //test de envio de informacion.
-//        int y=65;
-//        for(int i=0;i<5;i++){
-//            Thread.sleep(2000);
-//            SerialComm.sendTrama(i+y,y);
-//        }
-        
-        //SerialComm.close();
+
     }
 }

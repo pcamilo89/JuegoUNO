@@ -83,14 +83,16 @@ public class Deck {
         while (myIterator.hasNext())
         {
             card = (Card) myIterator.next();
-            if(card!=null)
+            if(card!=null){
                 System.out.println(card.toString());
+                System.out.flush();
+            }
         }
     }
     
     /**
      * Metodo que muestra la ultima carta o carta tope sin retirarla del mazo
-     * @return 
+     * @return carta a mostrar
      */
     public Card showLastCard(){
         Card card = Deck.get(size()-1);
@@ -109,17 +111,32 @@ public class Deck {
             int index = randomGenerator.nextInt(Deck.size());
             card = Deck.get(index);
         }
-      
-        Deck.remove(card);
+        
+        if(card!=null){
+            while(removeCard(card)){
+                if(card.getValue().equals(Value.MAS_CUATRO)||card.getValue().equals(Value.CAMBIA_COLOR)){
+                    
+                    //SETEO DE COLOR EN DECK GET RANDOM
+                    System.out.println("CARTA SIN COLOR EN CARD DECK GET RANDOM");
+                    card.setColor(Color.VERDE);
+
+                }
+            }
+        }
         return card;
     }
     
+    /**
+     * Metodo que muestra si una carta especifica se encuentra en el mazo
+     * @param color Color de la carta
+     * @param value Valor de la carta
+     * @return Carta si fue encontrada o null
+     */
     public Card showCard(Color color,Value value){
      
         //cambiar color para carta +4 y CambiaColor
-        if(value.equals(Value.MAS_CUATRO)||value.equals(Value.CAMBIA_COLOR)){
+        if(value.equals(Value.CAMBIA_COLOR)||value.equals(Value.MAS_CUATRO)){
             color = Color.NONE;
-
         }
         //Card cardActual;
         Card card = null;
@@ -127,12 +144,16 @@ public class Deck {
             if(i.getColor().equals(color) && i.getValue().equals(value)){
                 card = i;
                 break;
-                
             }
         }
         return card;
     }
     
+    /**
+     * Metodo que remueve una carta del mazo
+     * @param card carta a ser removida
+     * @return boolean true or false
+     */
     public boolean removeCard(Card card){
         return Deck.remove(card);
     }
@@ -146,8 +167,9 @@ public class Deck {
     public Card getCard(Color color,Value value){
         Card card = showCard(color, value);
 
-        removeCard(card);
-        return card;
+        while(removeCard(card))
+            return card;
+        return null;
     }
     
     /**
@@ -175,8 +197,9 @@ public class Deck {
      */
     public Card getFirstCard(){
         Card card = Deck.get(0);
-        Deck.remove(card);
-        return card;
+        while(Deck.remove(card))
+            return card;
+        return null;
     }
     /**
      * Metodo que obtiene la ultima carta o carta tope del Mazo y la retira del mismo
@@ -184,7 +207,8 @@ public class Deck {
      */
     public Card getLastCard(){
         Card card = Deck.get(size()-1);
-        Deck.remove(card);
-        return card;
+        while(Deck.remove(card))
+            return card;
+        return null;
     }
 }

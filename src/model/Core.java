@@ -251,6 +251,9 @@ public class Core {
         return false;
     }
     
+    /**
+     * Metodo para imprimir la mesa 
+     */
     public static void printTable(){
         
         for(int i=0;i<players.length;i++){

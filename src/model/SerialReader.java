@@ -44,35 +44,30 @@ public class SerialReader implements Runnable{
         this.live = live;
     }
 
-    
-    
     /**
      * Metodo que se ejecuta al iniciar el hilo.
      */
+    @Override
     public void run ()
     {
         try {
             byte[] buffer = new byte[1];
             int len = -1;
             String msg;
-            //char[] arr;
             int c ;
             Trama trama = new Trama();
             
-            //ciclo de lectura del buffer de entrada
-            //while ( ( len = this.in.read(buffer)) > -1 && live)
+            //Ciclo de lectura del buffer de entrada
             while ( ( len = this.in.read(buffer)) > -1 && live)
             {
 
                 msg = new String(buffer,0,len);
                 
-                //Segmento donde se maneja cuando se recibe cualquier caracter.
+                //Segmento donde se maneja cuando se recibe cualquier caracter
                 if(msg.length() > 0){
                     
                     c = Utils.unsignedToBytes(buffer[0]);
-                    
-                    
-                    
+
                     /* Se llena la 'trama' de tamaño 4 para comprobar mensaje valido
                     * y caso de ser valido se procesa.
                     */
@@ -82,10 +77,8 @@ public class SerialReader implements Runnable{
                         Protocol.processTrama(trama);
                     }
                     
-                    //EXPERIMENTAL prueba para limpiar buffer y caracteres nulos
-                    //buffer[0]=0;
                 }
-
+                System.out.flush();
             }
         } catch (IOException ex) {
             Logger.getLogger(SerialReader.class.getName()).log(Level.SEVERE, null, ex);

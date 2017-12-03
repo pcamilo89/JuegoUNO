@@ -9,7 +9,7 @@ package model;
 import java.util.Random;
 
 /**
- *  Clase donde se guardan funciones y variables generales y constantes
+ * Clase donde se guardan funciones y variables generales y constantes
  * @author Camilo
  */
 public class Utils {
@@ -43,7 +43,10 @@ public class Utils {
     public static final int BYTE_SIZE = 8;
     public static final int BUFFER_SPEED = 2400;
     
-    
+    /**
+     * Metodo que imprime cada caracter recibido en el buffer y identifica las flags
+     * @param c ultimo caracter representado como in
+     */
     public static void printMSG(int c){
         char info = (char) c;
         System.out.print(info+"\t");
@@ -66,11 +69,14 @@ public class Utils {
     /**
      * Metodo que convierte un numero decimal en cadena string que representa numero binario
      * @param data entrada en decimal
+     * @param size tamaño minimo deseado
      * @return salida en string binario
      */
     public static String intToBinary(int data,int size){
         String temp = Integer.toBinaryString(data);
         
+        //PRUEBA PROBLEMA COLOR NONE
+
         return completeBinary(temp, size);
     }
     
@@ -78,7 +84,7 @@ public class Utils {
      * Metodo que completa los ceros de un numero binario al tamaño indicado
      * @param data string de un numero binario
      * @param size tamaño del numero binario deseado
-     * @return 
+     * @return salida en string binario
      */
     public static String completeBinary(String data,int size){
         
@@ -94,7 +100,7 @@ public class Utils {
     }
     
     /**
-     * conversion de byte sin signo a int
+     * convercion de byte sin signo a int
      * @param b byte a ser convertido
      * @return int con rango de 0-255
      */
@@ -119,10 +125,13 @@ public class Utils {
         int num=0;
         for (Color i : Color.values()) {
             if(i.equals(color)){
-                if(color.equals(Color.NONE))
-                    return 0;
-                else
-                    return num;
+                //si el color es none se cambia
+                if(i.equals(Color.NONE)){
+                    System.out.println("CARTA SIN COLOR EN COLOR TO INT");
+                    System.out.flush();
+                    return 2; //retornando verde para cartas sin color
+                }
+                return num;
             }
             num++;
         }
