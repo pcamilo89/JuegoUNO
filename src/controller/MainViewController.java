@@ -8,6 +8,7 @@ package controller;
 
 import model.Protocol;
 import model.Utils;
+import view.GameView;
 import view.Main;
 import view.MainView;
 
@@ -28,6 +29,8 @@ public class MainViewController {
     public static void load(MainView from){
        mainView = from;
        mainView.setTitle(Utils.APP_NAME);
+       mainView.setLocationRelativeTo(null);
+       mainView.setResizable(false);
        mainView.getjTFPort().setText(Utils.comPort);
        mainView.getjBGameStart().setEnabled(false);
     }
@@ -125,5 +128,10 @@ public class MainViewController {
      */
     public static void clearTurnLabel(){
         mainView.getjLTurn().setText("");
+    }
+    
+    public static void showGameView(){
+        GameView gameView = new GameView(mainView);
+        gameView.setVisible(true);
     }
 }

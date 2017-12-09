@@ -71,6 +71,7 @@ public class SerialReader implements Runnable{
                     /* Se llena la 'trama' de tamaño 4 para comprobar mensaje valido
                     * y caso de ser valido se procesa.
                     */
+                    //Utils.printMSG(c);
                     trama.fillTrama(c);
                     if(trama.checkTrama()){
                         //trama.printTrama();

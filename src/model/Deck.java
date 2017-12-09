@@ -18,14 +18,14 @@ import model.Utils.Value;
  * @author Camilo
  */
 public class Deck {
-    private List<Card> Deck = new ArrayList<>();
+    private List<Card> deck = new ArrayList<>();
 
     /**
      * Metodo para obtener el mazo
      * @return Mazo de cartas
      */
     public List<Card> getDeck() {
-        return Deck;
+        return deck;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Deck {
      * @param myDeck Mazo de cartas
      */
     public void setDeck(List<Card> myDeck) {
-        this.Deck = myDeck;
+        this.deck = myDeck;
     }
     
     /**
@@ -41,7 +41,7 @@ public class Deck {
      * @param card carta que sera agregada
      */
     public void addCard(Card card){
-        Deck.add(card);
+        deck.add(card);
     }
     
     /**
@@ -52,15 +52,15 @@ public class Deck {
         for (Color i : Color.values()) {
             for (Value j : Value.values()) {
                 if(i!=Color.NONE && j==Value.CERO){
-                    Deck.add(new Card(i, j));
+                    deck.add(new Card(i, j));
                 }else if(i!=Color.NONE && j!=Value.CAMBIA_COLOR && j!=Value.MAS_CUATRO  && j!=Value.NONE){
-                    Deck.add(new Card(i, j));
-                    Deck.add(new Card(i, j));
+                    deck.add(new Card(i, j));
+                    deck.add(new Card(i, j));
                 }else if(i==Color.NONE && (j==Value.CAMBIA_COLOR || j==Value.MAS_CUATRO)){
-                    Deck.add(new Card(i, j));
-                    Deck.add(new Card(i, j));
-                    Deck.add(new Card(i, j));
-                    Deck.add(new Card(i, j));
+                    deck.add(new Card(i, j));
+                    deck.add(new Card(i, j));
+                    deck.add(new Card(i, j));
+                    deck.add(new Card(i, j));
                 }
             }
         }
@@ -70,7 +70,11 @@ public class Deck {
      * Metodo para limpiar el mazo
      */
     public void clearDeck(){
-        Deck.clear();
+        deck.clear();
+    }
+    
+    public Iterator getIterator(){
+        return deck.iterator();
     }
     
     /**
@@ -78,7 +82,7 @@ public class Deck {
      */
     public void printDeck(){
         Iterator myIterator;
-        myIterator = Deck.iterator();
+        myIterator = deck.iterator();
         Card card;
         while (myIterator.hasNext())
         {
@@ -95,7 +99,7 @@ public class Deck {
      * @return carta a mostrar
      */
     public Card showLastCard(){
-        Card card = Deck.get(size()-1);
+        Card card = deck.get(size()-1);
         System.out.println(card);
         return card;
     }
@@ -107,9 +111,9 @@ public class Deck {
     public Card getRandomCard(){
         Random randomGenerator = new Random();
         Card card = null;
-        if(Deck.size()>0){
-            int index = randomGenerator.nextInt(Deck.size());
-            card = Deck.get(index);
+        if(deck.size()>0){
+            int index = randomGenerator.nextInt(deck.size());
+            card = deck.get(index);
         }
         
         if(card!=null){
@@ -140,7 +144,7 @@ public class Deck {
         }
         //Card cardActual;
         Card card = null;
-        for (Card i :  this.Deck) {
+        for (Card i :  this.deck) {
             if(i.getColor().equals(color) && i.getValue().equals(value)){
                 card = i;
                 break;
@@ -155,7 +159,7 @@ public class Deck {
      * @return boolean true or false
      */
     public boolean removeCard(Card card){
-        return Deck.remove(card);
+        return deck.remove(card);
     }
     
     /**
@@ -177,7 +181,7 @@ public class Deck {
      * @return int de tamaño
      */
     public int size(){
-        return Deck.size();
+        return deck.size();
     }
     
     /**
@@ -196,8 +200,8 @@ public class Deck {
      * @return  Carta que se encontraba en la primera posicion o al fondo
      */
     public Card getFirstCard(){
-        Card card = Deck.get(0);
-        while(Deck.remove(card))
+        Card card = deck.get(0);
+        while(deck.remove(card))
             return card;
         return null;
     }
@@ -206,8 +210,8 @@ public class Deck {
      * @return Carta que se encontraba en la ultima posicion o al tope
      */
     public Card getLastCard(){
-        Card card = Deck.get(size()-1);
-        while(Deck.remove(card))
+        Card card = deck.get(size()-1);
+        while(deck.remove(card))
             return card;
         return null;
     }

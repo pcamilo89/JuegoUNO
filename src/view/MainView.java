@@ -15,7 +15,7 @@ import javax.swing.JTextField;
  * Clase de la ventana inicial de la aplicacion
  * @author Camilo
  */
-public class MainView extends javax.swing.JFrame {
+public class MainView extends MyFrame {
 
     /**
      * Creates new form MainView

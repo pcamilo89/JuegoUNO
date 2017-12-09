@@ -42,6 +42,12 @@ public class Utils {
     
     public static final int BYTE_SIZE = 8;
     public static final int BUFFER_SPEED = 2400;
+    public static final int SLEEP_TIME = 250;
+    
+    public static final float CARD_SCALE = 3;
+    
+    public static final int GAMEVIEW_WIDTH = 640;
+    public static final int GAMEVIEW_HEIGHT = 480;
     
     /**
      * Metodo que imprime cada caracter recibido en el buffer y identifica las flags
@@ -213,7 +219,7 @@ public class Utils {
     public static int getRandomint(int tope){
         Random randomGenerator = new Random();
         int index = randomGenerator.nextInt(tope);
-
+        
         return index;
     }
 }

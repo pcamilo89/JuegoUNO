@@ -6,6 +6,7 @@
 
 package model;
 
+import controller.GameViewController;
 import controller.MainViewController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +40,7 @@ public class Protocol {
         
         try {
             //PARA TESTEAR
-            Thread.sleep(50);
+            Thread.sleep(Utils.SLEEP_TIME);
         } catch (InterruptedException ex) {
             Logger.getLogger(Protocol.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -69,6 +70,7 @@ public class Protocol {
         //Muestra en la interfaz inicial el turno
         MainViewController.setTurnLabel("Turno: "+Utils.binaryToInt(to));
         
+        
         //si se reciben instrucciones 6 o 7 de manejo de cartas
         if(Utils.binaryToInt(instruction)==Utils.CONTROL_CARD_HAND||Utils.binaryToInt(instruction)==Utils.CONTROL_CARD_PLAY){
             direction = info.substring(1,2);
@@ -79,6 +81,11 @@ public class Protocol {
                         
             //instruccion de carta a la mano
             if(Utils.binaryToInt(instruction)==Utils.CONTROL_CARD_HAND){
+                
+                if(Core.getPhase()==Utils.PHASE_GAME){
+                    //si estoy en fase de juego actualizo la mesa
+                    GameViewController.updateTable();
+                }
                 //si recibo carta a la mano y no soy yo
                 if(Utils.binaryToInt(from)!=Core.getLocal()){
                     Core.setActual(Utils.binaryToInt(from));
@@ -132,8 +139,8 @@ public class Protocol {
                         }else{
                             //en caso de terminar de sacar mis 7 cartas se cambia de fase
                             Core.setPhase(Utils.PHASE_BOARD);
-                            MainViewController.setInfoLabel("Phase: "+Core.getPhase()+" Cards: "+Core.getPlayer(Core.getLocal()).size());
-                            System.out.println("Phase: "+Core.getPhase()+" Cards: "+Core.getPlayer(Core.getLocal()).size());
+                            MainViewController.setInfoLabel("Fase: "+Core.getPhase()+" Cartas: "+Core.getPlayer(Core.getLocal()).size());
+                            System.out.println("Fase: "+Core.getPhase()+" Cartas: "+Core.getPlayer(Core.getLocal()).size());
                             
                             //se le da turno al siguiente de sacar sus 7 cartas
                             Core.nextTurn();
@@ -185,12 +192,12 @@ public class Protocol {
                 if(Core.getPhase()==Utils.PHASE_BOARD){
                     //en caso de no estar en fase de juego se inicia
                     Core.setPhase(Utils.PHASE_GAME);
-                    MainViewController.setInfoLabel("Phase: "+Core.getPhase()+" Cards: "+Core.getPlayer(Core.getLocal()).size());
-                    System.out.println("Phase: "+Core.getPhase()+" Cards: "+Core.getPlayer(Core.getLocal()).size());
+                    MainViewController.setInfoLabel("Fase: "+Core.getPhase()+" Cartas: "+Core.getPlayer(Core.getLocal()).size());
+                    System.out.println("Fase: "+Core.getPhase()+" Cartas: "+Core.getPlayer(Core.getLocal()).size());
                     //en este punto se debe cambiar de ventana al tablero de juego
                     
                     //CAMBIO A TABLERO DE JUEGO
-                    
+                    MainViewController.showGameView();
                 }
                 
                 //se asigna el turno al destino
@@ -206,6 +213,9 @@ public class Protocol {
                         newCard = Core.getPlayer(Utils.binaryToInt(from)).getCard(Utils.intToColor(Utils.binaryToInt(color)),Utils.intToValue(Utils.binaryToInt(card)));
                     }                    
                     Core.getDrop().addCard(newCard);
+                    
+                    //se actualiza la mesa
+                    GameViewController.updateTable();
                     
                     //si es mi turno
                     if(Core.getActual()==Core.getLocal()){
@@ -230,10 +240,12 @@ public class Protocol {
                     System.out.println("YO ENVIE EL MENSAJE Y PUSE LA CARTA EN LA MESA");
                     System.out.flush();
                     Core.getDrop().addCard(newCard);
-                    //if(newCard!=null)
+                    
+                    //se actualiza la mesa
+                    GameViewController.updateTable();
                     
                     
-                    //si es mi turno (solo sucede si soy JUGADOR INICIAL
+                    //si es mi turno (solo sucede si soy JUGADOR INICIAL o JUGADOR GANADOR)
                     if(Core.getActual()==Core.getLocal()){
                         //Es mi turno debo activar la interfaz
                         System.out.println("ES MI TURNO Y SOY INICIAL");
@@ -253,6 +265,7 @@ public class Protocol {
             if(Core.getPhase()>=Utils.PHASE_GAME){
                 //Mostrar la mesa al pasar a fase juego
                 Core.printTable();
+                MainViewController.setInfoLabel("Fase: "+Core.getPhase()+" Cartas: "+Core.getPlayer(Core.getLocal()).size());
             }
             
         }else if(Utils.binaryToInt(instruction)==Utils.CONTROL_START_GAME){

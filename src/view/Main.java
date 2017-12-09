@@ -92,6 +92,6 @@ public class Main {
         setLookAndFeel();
         MainView mainView = new MainView();
         mainView.setVisible(true);
-
+        
     }
 }
