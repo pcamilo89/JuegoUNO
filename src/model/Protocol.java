@@ -70,6 +70,9 @@ public class Protocol {
         //Muestra en la interfaz inicial el turno
         MainViewController.setTurnLabel("Turno: "+Utils.binaryToInt(to));
         
+        //se asigna el turno al destino
+        Core.setActual(Utils.binaryToInt(to));
+
         
         //si se reciben instrucciones 6 o 7 de manejo de cartas
         if(Utils.binaryToInt(instruction)==Utils.CONTROL_CARD_HAND||Utils.binaryToInt(instruction)==Utils.CONTROL_CARD_PLAY){
@@ -78,7 +81,7 @@ public class Protocol {
             card = info.substring(4, 8);
             System.out.println(from+" "+to+" "+instruction+" "+direction+" "+color+" "+card);
             
-                        
+                                   
             //instruccion de carta a la mano
             if(Utils.binaryToInt(instruction)==Utils.CONTROL_CARD_HAND){
                 
@@ -88,7 +91,7 @@ public class Protocol {
                 }
                 //si recibo carta a la mano y no soy yo
                 if(Utils.binaryToInt(from)!=Core.getLocal()){
-                    Core.setActual(Utils.binaryToInt(from));
+                    //Core.setActual(Utils.binaryToInt(from));
                     
                     newCard = null;
                     while(newCard==null){
@@ -104,7 +107,7 @@ public class Protocol {
                     if(Core.getPhase()==Utils.PHASE_INITIAL_CARDS){
                         if(Core.getCounter()<7){
                             //se obtiene la carta n a la mano
-                            Core.setActual(Core.getLocal());
+                            //Core.setActual(Core.getLocal());
                             
                             newCard = null;
                             while(newCard==null){
@@ -142,6 +145,7 @@ public class Protocol {
                             MainViewController.setInfoLabel("Fase: "+Core.getPhase()+" Cartas: "+Core.getPlayer(Core.getLocal()).size());
                             System.out.println("Fase: "+Core.getPhase()+" Cartas: "+Core.getPlayer(Core.getLocal()).size());
                             
+                            Core.setCounter(0);
                             //se le da turno al siguiente de sacar sus 7 cartas
                             Core.nextTurn();
                             to = Utils.intToBinary(Core.getActual(), 2);
@@ -157,7 +161,7 @@ public class Protocol {
                         }
                     }else if(Core.getPhase()==Utils.PHASE_BOARD&&Core.getLocal()==0){
                         //y se esta en fase de preparacion de mesa y soy jugador inicial o 0
-                        Core.setActual(Core.getLocal());
+                        //Core.setActual(Core.getLocal());
                                                 
                         //se toma la ultima carta en la mano y se envia primer mensaje de carta a la mesa
                         newCard = null;
@@ -185,6 +189,91 @@ public class Protocol {
                         trama = new Trama(Utils.binaryToInt(control), Utils.binaryToInt(info));
                         SerialComm.sendTrama(trama);
                         
+                    }else if(Core.getPhase()==Utils.PHASE_GAME){
+                        //Carta a la mano en fase de juego
+                        //hay 2 casos para que esto ocurra.
+                        if(Core.getGrabCase() == 0){
+                            //que no tenga una carta para jugar y acabo de recibir una
+                            if(!Core.isLocalAbleToPlay()){
+                                //si con la nueva carta no puedo jugar debo pasar el turno con carta null;
+                                System.out.println("PASO EL TURNO");
+                                
+                                from = Utils.intToBinary(Core.getLocal(), 2);
+                                Core.nextTurn();
+                                to = Utils.intToBinary(Core.getActual(), 2);
+
+                                instruction = Utils.intToBinary(Utils.CONTROL_CARD_PLAY, 4);
+                                control = from+to+instruction;
+
+                                direction = "1"+Utils.intToBinary(Core.getDirection(), 1);
+                                color = Utils.intToBinary(Utils.colorToInt(Utils.Color.VERDE), 2);
+                                card = Utils.intToBinary(Utils.valueToInt(Utils.Value.NONE), 4);
+                                info = direction+color+card;
+                                System.out.println("INFOS:"+info);
+
+                                trama = new Trama(Utils.binaryToInt(control), Utils.binaryToInt(info));
+                                SerialComm.sendTrama(trama);
+                            }
+                            Core.setGrabCase(-1);
+                        }else if(Core.getGrabCase() == 1){
+                            //que tenga que agarrar cartas por +2 0 +4
+                            if(Core.getCounter() > 0){
+                                //se obtiene la siguiente carta
+                                newCard = null;
+                                while(newCard==null){
+                                    newCard = Core.getRandomCard();
+
+                                }
+
+                                //Primero se pasa la trama
+                                //Luego se chequea si color valido para cartas sin color
+                                //Se agrega a la mano
+
+                                //se construye la trama a enviar
+                                from = Utils.intToBinary(Core.getLocal(), 2);
+                                to = Utils.intToBinary(Core.getLocal(), 2);
+                                instruction = Utils.intToBinary(Utils.CONTROL_CARD_HAND,4);
+                                control = from+to+instruction;
+
+                                direction = "1"+Utils.intToBinary(Core.getDirection(), 1);
+                                color = Utils.intToBinary(Utils.colorToInt(newCard.getColor()), 2);
+                                card = Utils.intToBinary(Utils.valueToInt(newCard.getValue()), 4);
+                                info = direction+color+card;
+                                System.out.println("INFOS:"+info);
+
+                                trama = new Trama(Utils.binaryToInt(control), Utils.binaryToInt(info));
+                                SerialComm.sendTrama(trama);
+
+                                //se chequea la carta y su color y se agrega
+                                newCard.checkCard();
+                                Core.getPlayer(Core.getLocal()).addCard(newCard);                                
+                                
+                                //se disminuye en uno el contador
+                                Core.setCounter(Core.getCounter()-1);
+                            }else{
+                                //se pasa el turno cuando se agarran todas las cartas
+                                System.out.println("PASO EL TURNO");
+                                
+                                from = Utils.intToBinary(Core.getLocal(), 2);
+                                Core.nextTurn();
+                                to = Utils.intToBinary(Core.getActual(), 2);
+
+                                instruction = Utils.intToBinary(Utils.CONTROL_CARD_PLAY, 4);
+                                control = from+to+instruction;
+
+                                direction = "1"+Utils.intToBinary(Core.getDirection(), 1);
+                                color = Utils.intToBinary(Utils.colorToInt(Utils.Color.VERDE), 2);
+                                card = Utils.intToBinary(Utils.valueToInt(Utils.Value.NONE), 4);
+                                info = direction+color+card;
+                                System.out.println("INFOS:"+info);
+
+                                trama = new Trama(Utils.binaryToInt(control), Utils.binaryToInt(info));
+                                SerialComm.sendTrama(trama);
+                                
+                                Core.setGrabCase(-1);
+                            }
+                        }
+                        
                     }
                 }
             }else if(Utils.binaryToInt(instruction)==Utils.CONTROL_CARD_PLAY){
@@ -201,57 +290,112 @@ public class Protocol {
                 }
                 
                 //se asigna el turno al destino
-                Core.setActual(Utils.binaryToInt(to));
+                //Core.setActual(Utils.binaryToInt(to));
+                
+                if(Utils.valueToInt(Utils.Value.NONE) != Utils.binaryToInt(card)){
+                    //si la carta recibida es distinta de null (paso de turno)
+                    
+                    //se suma uno al contador de cartas jugadas
+                    Core.setCardsPlayed(Core.getCardsPlayed()+1);
+
+                    //se coloca la carta en la mesa;
+                    newCard = null;
+                    while(newCard==null){
+                        newCard = Core.getPlayer(Utils.binaryToInt(from)).getCard(Utils.intToColor(Utils.binaryToInt(color)),Utils.intToValue(Utils.binaryToInt(card)));
+                    }
+                    Core.getDrop().addCard(newCard);
+
+                    //se setea color en la mesa que llega en trama
+                    Core.setTableColor(Utils.binaryToInt(color));
+
+                    //se actualiza la mesa
+                    GameViewController.updateTable();
+                }
                 
                 //si yo no envie el mensaje
                 if(Core.getLocal()!=Utils.binaryToInt(from)){
                     //se retransmite el mensaje y se coloca la carta en la mesa
-                    //System.out.println("CARTA A LA MESA DE: "+from);
-                    
-                    newCard = null;
-                    while(newCard==null){
-                        newCard = Core.getPlayer(Utils.binaryToInt(from)).getCard(Utils.intToColor(Utils.binaryToInt(color)),Utils.intToValue(Utils.binaryToInt(card)));
-                    }                    
-                    Core.getDrop().addCard(newCard);
-                    
-                    //se actualiza la mesa
-                    GameViewController.updateTable();
-                    
-                    //si es mi turno
-                    if(Core.getActual()==Core.getLocal()){
-                        //Es mi turno debo activar la interfaz
-                        System.out.println("ES MI TURNO SOY:"+to);
-                        
-                        //CODIGO DE ACTIVACION DE INTERFAZ
-                        //TURNO DE JUGADOR EN FASE DE JUEGO
-                        
-                    }
                     SerialComm.sendTrama(trama);
+                    
+                    try {
+                        Thread.sleep(Utils.SLEEP_TIME);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Protocol.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                                                            
+                    if(Core.getActual()==Core.getLocal()){
+                        //si es mi turno
+                        if( (Utils.binaryToInt(card) == Utils.valueToInt(Utils.Value.MAS_DOS) || Utils.binaryToInt(card) == Utils.valueToInt(Utils.Value.MAS_CUATRO)) && Core.getCardsPlayed()!= 0 ){
+                            //si se debe agarrar cartas se setea el caso de agarre solo en casos distintos a primera carta a la mesa
+                            Core.setGrabCase(1);
+                            
+                            if(Utils.binaryToInt(card) == Utils.valueToInt(Utils.Value.MAS_DOS)){
+                                //si es una carta +2
+                                Core.setCounter(1);
+                            }else if(Utils.binaryToInt(card) == Utils.valueToInt(Utils.Value.MAS_CUATRO)){
+                                Core.setCounter(3);
+                            }
+                            
+                            //se obtiene la siguiente carta
+                            newCard = null;
+                            while(newCard==null){
+                                newCard = Core.getRandomCard();
+
+                            }
+
+                            //Primero se pasa la trama
+                            //Luego se chequea si color valido para cartas sin color
+                            //Se agrega a la mano
+
+                            //se construye la trama a enviar
+                            from = Utils.intToBinary(Core.getLocal(), 2);
+                            to = Utils.intToBinary(Core.getLocal(), 2);
+                            instruction = Utils.intToBinary(Utils.CONTROL_CARD_HAND,4);
+                            control = from+to+instruction;
+
+                            direction = "1"+Utils.intToBinary(Core.getDirection(), 1);
+                            color = Utils.intToBinary(Utils.colorToInt(newCard.getColor()), 2);
+                            card = Utils.intToBinary(Utils.valueToInt(newCard.getValue()), 4);
+                            info = direction+color+card;
+                            System.out.println("INFOS:"+info);
+
+                            trama = new Trama(Utils.binaryToInt(control), Utils.binaryToInt(info));
+                            SerialComm.sendTrama(trama);
+
+                            //se chequea la carta y su color y se agrega
+                            newCard.checkCard();
+                            Core.getPlayer(Core.getLocal()).addCard(newCard);
+                            
+
+                        }                        
+                    }
+                    
                     
                 }else{
                     //si yo envie el mensaje
                     //no se retransmite solo se coloca carta en la mesa
-                    
-                    newCard = null;
-                    while(newCard==null){
-                        newCard = Core.getPlayer(Utils.binaryToInt(from)).getCard(Utils.intToColor(Utils.binaryToInt(color)),Utils.intToValue(Utils.binaryToInt(card)));
-                    }
-                    
-                    System.out.println("YO ENVIE EL MENSAJE Y PUSE LA CARTA EN LA MESA");
-                    System.out.flush();
-                    Core.getDrop().addCard(newCard);
-                    
-                    //se actualiza la mesa
-                    GameViewController.updateTable();
-                    
+                                        
+                    //System.out.println("YO ENVIE EL MENSAJE Y PUSE LA CARTA EN LA MESA");
+                    //System.out.flush();
                     
                     //si es mi turno (solo sucede si soy JUGADOR INICIAL o JUGADOR GANADOR)
-                    if(Core.getActual()==Core.getLocal()){
-                        //Es mi turno debo activar la interfaz
-                        System.out.println("ES MI TURNO Y SOY INICIAL");
+                    //y ya no tengo cartas, soy ganador
+                    if(Core.getActual()==Core.getLocal() && Core.getPlayer(Core.getLocal()).size() == 0){
+                        System.out.println("GANE!!!!");
                         
-                        //CODIGO DE ACTIVACION DE INTERFAZ
-                        //TURNO DE JUGADOR EN FASE DE JUEGO
+                        //ENVIAR A TODOS MENSAJE DE VICTORIA
+                        from = Utils.intToBinary(Core.getLocal(), 2);
+                        to = from;
+                        instruction = Utils.intToBinary(Utils.CONTROL_VICTORY, 4);
+                        control = from+to+instruction;
+
+                        //construccion de segmento informacion
+                        info = Utils.INFO_FILLER_8;
+                        System.out.println("INFOS:"+info);
+
+                        //envio de la primera trama
+                        trama = new Trama(Utils.binaryToInt(control), Utils.binaryToInt(info));
+                        SerialComm.sendTrama(trama);
                         
                     }
                 }
@@ -264,8 +408,10 @@ public class Protocol {
             //SI YA SE ESTA EN FASE DE JUEGO
             if(Core.getPhase()>=Utils.PHASE_GAME){
                 //Mostrar la mesa al pasar a fase juego
-                Core.printTable();
-                MainViewController.setInfoLabel("Fase: "+Core.getPhase()+" Cartas: "+Core.getPlayer(Core.getLocal()).size());
+                //Core.printTable();
+                System.out.println("TURNO ACTUAL: "+Utils.binaryToInt(to));
+                System.out.println("Contador: "+Core.getCounter()+" Jugadas: "+Core.getCardsPlayed());
+                System.out.println("Color: "+Utils.intToColor(Core.getTableColor()));
             }
             
         }else if(Utils.binaryToInt(instruction)==Utils.CONTROL_START_GAME){
@@ -354,12 +500,12 @@ public class Protocol {
                     Core.setCounter(Core.getCounter()+1);
                 }
             }
-        }else{
+        }else if(Utils.binaryToInt(instruction)==Utils.CONTROL_STARTING_CARDS){
             System.out.println(from+" "+to+" "+instruction);
             
             //si recibo mensaje de cartas iniciales y soy jugador distinto de cero
             if(Utils.binaryToInt(instruction)==Utils.CONTROL_STARTING_CARDS&&Core.getLocal()!=0){
-                Core.setActual(Core.getLocal());
+                //Core.setActual(Core.getLocal());
                 //comienzan fase de cartas iniciales;
 
                 //se obtiene la primera carta a la mano
@@ -390,7 +536,7 @@ public class Protocol {
                 
             }else if(Utils.binaryToInt(instruction)==Utils.CONTROL_STARTING_CARDS&&Core.getLocal()==0){
                 //recibo mensaje de cartas iniciales y soy jugador inicial o 0
-                Core.setActual(Core.getLocal());
+                //Core.setActual(Core.getLocal());
          
                 //se obtiene en mano la carta que va a la mesa
                 newCard = null;
@@ -418,6 +564,17 @@ public class Protocol {
                 Core.getPlayer(Core.getLocal()).addCard(newCard);
                 
             }
+        }else if(Utils.binaryToInt(instruction)==Utils.CONTROL_VICTORY){
+            //si no soy origen y dentino debo retransmitir y debo desabilitar las interfaces
+            //debo anunciar al ganador
+            //y terminar ejecucion.
+            Core.setPhase(Utils.PHASE_VICTORY);
+            if(Core.isLocalTurn()){
+                System.out.println("GANE LA PARTIDA!!!");
+            }else{
+                System.out.println("El Jugador "+Core.getActual()+" GANO!!");
+                SerialComm.sendTrama(trama);
+            }
         }
     }
     
@@ -443,5 +600,126 @@ public class Protocol {
         //envio de la primera trama
         Trama trama = new Trama(Utils.binaryToInt(control), Utils.binaryToInt(info));
         SerialComm.sendTrama(trama);
+    }
+    
+    public static void playCard(Card cardToPlay){
+        Trama trama =  null;
+        
+        if(Core.isLocalTurn()){
+            //Si es turno local puedo jugar carta si cumple con condicion de carta previa
+             
+            if(!cardToPlay.getColor().equals(Utils.Color.NONE)){
+                //Si el color de la carta a jugar es distinto de NONE                    
+                if(cardToPlay.getColor().equals(Utils.intToColor(Core.getTableColor())) || cardToPlay.getValue().equals(Core.getDrop().showLastCard().getValue()) || (Core.getDrop().showLastCard().getValue().equals(Utils.Value.CAMBIA_COLOR) && Core.getCardsPlayed() == 0)){
+                    //si el color o el valor son iguales a la mesa puedo jugar
+                    //paso a formar trama al recibir este mensaje se quita de la mano
+                    from = Utils.intToBinary(Core.getLocal(), 2);
+
+                    //si la carta es CAMBIA_SENTIDO o PIERDE TURNO se setea el turno que sigue
+                    //y no es la ultima carta en la mano
+                    if(Core.getPlayer(Core.getLocal()).size()>1){
+                        if(cardToPlay.getValue().equals(Utils.Value.CAMBIA_SENTIDO)){
+                            Core.changeDirection();
+                            Core.nextTurn();
+                        }else if(cardToPlay.getValue().equals(Utils.Value.PIERDE_TURNO)){
+                            Core.nextTurn();
+                            Core.nextTurn();
+                        }
+                        else{
+                            Core.nextTurn();
+                        }
+                        to = Utils.intToBinary(Core.getActual(), 2);
+                    }else{
+                        to = Utils.intToBinary(Core.getLocal(), 2);
+                    }
+                    
+                    
+                    instruction = Utils.intToBinary(Utils.CONTROL_CARD_PLAY, 4);
+                    control = from+to+instruction;
+
+                    direction = "1"+Utils.intToBinary(Core.getDirection(), 1);
+
+                    color = Utils.intToBinary(Utils.colorToInt(cardToPlay.getColor()), 2);
+                    card = Utils.intToBinary(Utils.valueToInt(cardToPlay.getValue()), 4);
+                    info = direction+color+card;
+                    System.out.println("INFOS:"+info);
+
+
+                    trama = new Trama(Utils.binaryToInt(control), Utils.binaryToInt(info));
+                    SerialComm.sendTrama(trama);
+                }
+            }else{
+                //si el color de la carta es igual a NONE
+                //paso a formar trama al recibir este mensaje se quita de la mano
+                from = Utils.intToBinary(Core.getLocal(), 2);
+
+                //el turno es del siguiente en el mismo sentido
+                //si no es la ultima carta.
+                if(Core.getPlayer(Core.getLocal()).size()>1){
+                    Core.nextTurn();
+                    to = Utils.intToBinary(Core.getActual(), 2);
+                }else{
+                    to = Utils.intToBinary(Core.getLocal(), 2);
+                }
+                
+                instruction = Utils.intToBinary(Utils.CONTROL_CARD_PLAY, 4);
+                control = from+to+instruction;
+
+                direction = "1"+Utils.intToBinary(Core.getDirection(), 1);
+
+                //DEBO SELECCIONAR COLOR CON UNA VENTANA ADICIONAL ANTES DE ENVIAR COLOR
+                //mientras no elijo un color
+                int selectedColor = -1;
+                while(selectedColor == -1)
+                    selectedColor = Utils.colorChooser(Utils.COLOR_DIALOG, null);
+                    
+                color = Utils.intToBinary(selectedColor, 2);
+
+                card = Utils.intToBinary(Utils.valueToInt(cardToPlay.getValue()), 4);
+                info = direction+color+card;
+                System.out.println("INFOS:"+info);
+
+
+                trama = new Trama(Utils.binaryToInt(control), Utils.binaryToInt(info));
+                SerialComm.sendTrama(trama);
+            }
+            
+        }
+    }
+    
+    public static void takeCardToHand(){
+        //se obtiene la carta en la mano
+        if(Core.isLocalTurn()){
+            Trama trama;
+
+            newCard = null;
+            while(newCard==null){
+                newCard = Core.getRandomCard();
+
+            }
+
+            //Primero se pasa la trama
+            //Luego se chequea si color valido para cartas sin color
+            //Se agrega a la mano
+
+            //se construye la trama a enviar
+            from = Utils.intToBinary(Core.getLocal(), 2);
+            to = Utils.intToBinary(Core.getLocal(), 2);
+            instruction = Utils.intToBinary(Utils.CONTROL_CARD_HAND,4);
+            control = from+to+instruction;
+
+            direction = "1"+Utils.intToBinary(Core.getDirection(), 1);
+            color = Utils.intToBinary(Utils.colorToInt(newCard.getColor()), 2);
+            card = Utils.intToBinary(Utils.valueToInt(newCard.getValue()), 4);
+            info = direction+color+card;
+            System.out.println("INFOS:"+info);
+
+            trama = new Trama(Utils.binaryToInt(control), Utils.binaryToInt(info));
+            SerialComm.sendTrama(trama);
+
+            //se chequea la carta y su color y se agrega
+            newCard.checkCard();
+            Core.getPlayer(Core.getLocal()).addCard(newCard);
+        }
     }
 }

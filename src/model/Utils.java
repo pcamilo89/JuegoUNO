@@ -7,6 +7,11 @@
 package model;
 
 import java.util.Random;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import view.JPColorChooser;
 
 /**
  * Clase donde se guardan funciones y variables generales y constantes
@@ -32,6 +37,7 @@ public class Utils {
     public static final int PHASE_INITIAL_CARDS = 1;
     public static final int PHASE_BOARD = 2;
     public static final int PHASE_GAME = 3;
+    public static final int PHASE_VICTORY = 4;
     
     public static final String INFO_FILLER_5 = "10000";
     public static final String INFO_FILLER_8 = "10000000";
@@ -48,6 +54,8 @@ public class Utils {
     
     public static final int GAMEVIEW_WIDTH = 640;
     public static final int GAMEVIEW_HEIGHT = 480;
+    
+    public static final String COLOR_DIALOG = "Elije un Color:";
     
     /**
      * Metodo que imprime cada caracter recibido en el buffer y identifica las flags
@@ -222,4 +230,67 @@ public class Utils {
         
         return index;
     }
+    
+    public static boolean textDialog(String text, JFrame father){
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel(text);
+        panel.add(label);
+        String[] options = new String[]{"Yes"};
+        int option = JOptionPane.showOptionDialog(father, panel, Utils.APP_NAME,
+        JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+        null, options, options[0]);
+        if(option == 0) // pressing OK button
+        {
+            return true;
+        }
+        return false;
+    }
+    
+        public static int colorChooser(String text, JFrame father){
+            JPColorChooser panel = new JPColorChooser();
+            panel.getjLText().setText(text);
+            
+            panel.getjPBlue().addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    panel.setColor(Utils.colorToInt(Color.AZUL));
+                    panel.getjLText().setText("Seleccionado "+Color.AZUL);
+                }
+            });
+            
+            panel.getjPGreen().addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    panel.setColor(Utils.colorToInt(Color.VERDE));
+                    panel.getjLText().setText("Seleccionado "+Color.VERDE);
+                }
+            });
+            
+            panel.getjPRed().addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    panel.setColor(Utils.colorToInt(Color.ROJO));
+                    panel.getjLText().setText("Seleccionado "+Color.ROJO);
+                }
+            });
+            
+            panel.getjPYellow().addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    panel.setColor(Utils.colorToInt(Color.AMARILLO));
+                    panel.getjLText().setText("Seleccionado "+Color.AMARILLO);
+                }
+            });
+            
+            String[] options = new String[]{"Yes"};
+            int option = JOptionPane.showOptionDialog(father, panel, Utils.APP_NAME,
+            JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+            null, options, options[0]);
+            if(option == 0) // pressing OK button
+            {
+                return panel.getColor();
+            }
+            return panel.getColor();
+            
+        }
 }

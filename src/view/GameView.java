@@ -8,6 +8,7 @@ package view;
 
 import controller.GameViewController;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 /**
@@ -37,6 +38,14 @@ public class GameView extends MyFrame{
     public void setjSPLocalHand(JScrollPane jSPLocalHand) {
         this.jSPLocalHand = jSPLocalHand;
     }
+
+    public JPanel getjPDecks() {
+        return jPDecks;
+    }
+
+    public void setjPDecks(JPanel jPDecks) {
+        this.jPDecks = jPDecks;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,14 +58,47 @@ public class GameView extends MyFrame{
 
         jPTablero = new javax.swing.JPanel();
         jSPLocalHand = new javax.swing.JScrollPane();
+        jPCenter = new javax.swing.JPanel();
+        jPDecks = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPTablero.setBackground(new java.awt.Color(102, 102, 102));
         jPTablero.setPreferredSize(new java.awt.Dimension(200, 150));
         jPTablero.setLayout(new java.awt.BorderLayout());
 
+        jSPLocalHand.setBackground(new java.awt.Color(255, 255, 51));
+        jSPLocalHand.setOpaque(false);
         jSPLocalHand.setPreferredSize(new java.awt.Dimension(2, 150));
         jPTablero.add(jSPLocalHand, java.awt.BorderLayout.SOUTH);
+
+        jPCenter.setBackground(new java.awt.Color(0, 153, 153));
+        jPCenter.setPreferredSize(new java.awt.Dimension(640, 480));
+
+        jPDecks.setOpaque(false);
+
+        javax.swing.GroupLayout jPCenterLayout = new javax.swing.GroupLayout(jPCenter);
+        jPCenter.setLayout(jPCenterLayout);
+        jPCenterLayout.setHorizontalGroup(
+            jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPCenterLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPDecks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPCenterLayout.setVerticalGroup(
+            jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPCenterLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPDecks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        jPTablero.add(jPCenter, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPTablero, java.awt.BorderLayout.CENTER);
 
@@ -91,14 +133,14 @@ public class GameView extends MyFrame{
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GameView().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new GameView().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPCenter;
+    private javax.swing.JPanel jPDecks;
     private javax.swing.JPanel jPTablero;
     private javax.swing.JScrollPane jSPLocalHand;
     // End of variables declaration//GEN-END:variables

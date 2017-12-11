@@ -6,6 +6,8 @@
 
 package model;
 
+import java.util.Iterator;
+
 /**
  * Clase para el manejo del nucleo de la aplicacion
  * @author Camilo
@@ -13,6 +15,7 @@ package model;
 public class Core {
     //variable para fase del juego
     private static int phase = 0;
+    //contador de cartas para cartas iniciales o casos +2 y +4
     private static int counter = 0;
     
     //variables para logica de turnos
@@ -21,12 +24,45 @@ public class Core {
     private static int max = 3;
     private static int direction = 0;
     
+    //variables para partida en curso
+    private static int cardsPlayed = -1;
+    private static int tableColor = -1;
+    
+    //variable para controlar casos en los que se tiene que agarrar cartas
+    //0 - agarrar carta y pasar turno en caso de no tener cartas para jugar en mano
+    //1 - agarrar cartas por +2 o +4 para lo que se utiliza counter para numero de cartas
+    private static int grabCase = -1;
+    
     //variables de manejo de mazos
     private static Deck draw = new Deck();
     private static Deck drop = new Deck();
     
     //array de manos de jugadores
     private static final Deck[] players = new Deck[4];
+
+    public static int getGrabCase() {
+        return grabCase;
+    }
+
+    public static void setGrabCase(int grabCase) {
+        Core.grabCase = grabCase;
+    }
+    
+    public static int getTableColor() {
+        return tableColor;
+    }
+
+    public static void setTableColor(int tableColor) {
+        Core.tableColor = tableColor;
+    }
+
+    public static int getCardsPlayed() {
+        return cardsPlayed;
+    }
+
+    public static void setCardsPlayed(int cardsPlayed) {
+        Core.cardsPlayed = cardsPlayed;
+    }
 
     /**
      * Metodo para obtener valor de la fase
@@ -236,7 +272,7 @@ public class Core {
         if(actual==max+1){
             actual=0;
         }else if(actual==-1){
-            actual=3;
+            actual=max;
         }
     }
     
@@ -265,4 +301,16 @@ public class Core {
         getDrop().size();
     }
     
+    public static boolean isLocalAbleToPlay(){
+        Deck deck = Core.getPlayer(Core.local);
+        Iterator myIterator = deck.getIterator();
+        Card card;
+        while(myIterator.hasNext()){
+            card = (Card) myIterator.next();
+            if(card.getColor().equals(getDrop().showLastCard().getColor()) || card.getValue().equals(getDrop().showLastCard().getValue()) || card.getColor().equals(Utils.Color.NONE)){
+                return true;
+            }
+        }        
+        return false;
+    }
 }

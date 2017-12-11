@@ -9,6 +9,7 @@ package view;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import model.Card;
 import model.Utils.Color;
 
@@ -17,7 +18,7 @@ import model.Utils.Color;
  * @author Camilo
  */
 public class CardView extends JLabel{
-    private MyPanel father = null;
+    private JPanel father = null;
     private Card card = null;
     private int cardWidth = 240;
     private int cardHeight = 360;
@@ -28,12 +29,12 @@ public class CardView extends JLabel{
         changeSize();
     }
     
-    public CardView(MyPanel father){
+    public CardView(JPanel father){
         this.father = father;
         changeSize();
     }
     
-    public CardView(MyPanel father,Card card){
+    public CardView(JPanel father,Card card){
         this.father = father;
         this.card = card;
         changeSize();
@@ -94,7 +95,7 @@ public class CardView extends JLabel{
         changeSize();
     }
 
-    public MyPanel getFather() {
+    public JPanel getFather() {
         return father;
     }
 

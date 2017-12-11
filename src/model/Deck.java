@@ -100,7 +100,7 @@ public class Deck {
      */
     public Card showLastCard(){
         Card card = deck.get(size()-1);
-        System.out.println(card);
+        //System.out.println(card);
         return card;
     }
     

@@ -11,7 +11,9 @@ import java.util.Iterator;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import model.Card;
+import model.Core;
 import model.Deck;
+import model.Protocol;
 import model.Utils;
 
 /**
@@ -25,6 +27,7 @@ public class MyPanel extends JPanel{
     public MyPanel(){
         super();
         this.setLayout(new FlowLayout(1));
+        this.setOpaque(false);
         this.father=null;
         this.hand = null;
     }
@@ -32,6 +35,7 @@ public class MyPanel extends JPanel{
     public MyPanel(JFrame father, Deck hand){
         super();
         this.setLayout(new FlowLayout(1));
+        this.setOpaque(false);
         this.father=father;
         this.hand= hand;
         
@@ -47,13 +51,19 @@ public class MyPanel extends JPanel{
             CardView cardView = new CardView(this,card);
             cardView.setScale((float)Utils.CARD_SCALE);
             cardView.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                //jLabel1MouseClicked(evt);
-                //LLAMADA A CONTROLADOR PARA JUGAR CARTA SELECCIONADA EN CASO DE TURNO
-                System.out.println(cardView.getCard());
-            }
-        });
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    //LLAMADA A CONTROLADOR PARA JUGAR CARTA SELECCIONADA EN CASO DE TURNO
+                    if(Core.getPhase() == Utils.PHASE_GAME){
+                        //solo si es fase de juego
+                        if(Core.isLocalTurn()){
+                            Protocol.playCard(cardView.getCard());
+                        }else{
+                            System.out.println("NO ES TU TURNO");
+                        }
+                    }
+                }
+            });
             this.add(cardView);
         }
     }

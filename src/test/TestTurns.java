@@ -13,6 +13,9 @@ public class TestTurns {
 
     public static void main(String[] args) throws InterruptedException{
         int x = 0;
+        Core.setLocal(1);
+        Core.setMax(1);
+        Core.setActual(0);
         while(true){
             x++;
             Thread.sleep(2000);
