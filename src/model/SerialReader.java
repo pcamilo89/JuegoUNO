@@ -61,6 +61,13 @@ public class SerialReader implements Runnable{
             while ( ( len = this.in.read(buffer)) > -1 && live)
             {
 
+                try {
+                    //PARA TESTEAR
+                    Thread.sleep(Utils.SLEEP_TIME_SHORT);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Protocol.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                                
                 msg = new String(buffer,0,len);
                 
                 //Segmento donde se maneja cuando se recibe cualquier caracter

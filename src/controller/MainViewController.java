@@ -29,10 +29,13 @@ public class MainViewController {
     public static void load(MainView from){
        mainView = from;
        mainView.setTitle(Utils.APP_NAME);
+       
+       mainView.getjTFPort().setText(Utils.comPort);
+       mainView.getjTFSpeed().setText(String.valueOf(Utils.BUFFER_SPEED));
+       mainView.getjBGameStart().setEnabled(false);
+       
        mainView.setLocationRelativeTo(null);
        mainView.setResizable(false);
-       mainView.getjTFPort().setText(Utils.comPort);
-       mainView.getjBGameStart().setEnabled(false);
     }
     
     /**
@@ -50,6 +53,7 @@ public class MainViewController {
      */
     public static void startComm(){
         Utils.comPort = mainView.getjTFPort().getText();
+        Utils.BUFFER_SPEED = Integer.parseInt(mainView.getjTFSpeed().getText());
         Main.startApp();
         mainView.getjBGameStart().setEnabled(true);
     }

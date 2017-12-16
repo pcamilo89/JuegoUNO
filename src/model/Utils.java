@@ -8,10 +8,9 @@ package model;
 
 import java.util.Random;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import view.JPColorChooser;
+import view.MyDialog;
 
 /**
  * Clase donde se guardan funciones y variables generales y constantes
@@ -47,8 +46,10 @@ public class Utils {
     public static final int TRAMA_INFO = 128;
     
     public static final int BYTE_SIZE = 8;
-    public static final int BUFFER_SPEED = 2400;
-    public static final int SLEEP_TIME = 250;
+    public static int BUFFER_SPEED = 1200;
+        
+    public static int SLEEP_TIME_SHORT = 10;
+    public static int SLEEP_TIME_LONG = 50;
     
     public static final float CARD_SCALE = 3;
     
@@ -56,6 +57,20 @@ public class Utils {
     public static final int GAMEVIEW_HEIGHT = 480;
     
     public static final String COLOR_DIALOG = "Elije un Color:";
+    
+    public static final String INFO_MESSAGE_NOTURN = "No es tu Turno.";
+    public static final String INFO_MESSAGE_ISTURN = "Es tu Turno!!";
+    public static final String INFO_MESSAGE_ANOTHERTURN = "Es turno de Jugador ";
+    
+    public static final String INFO_MESSAGE_CARD_NOTAKE = "No puedes tomar una Carta.";
+    public static final String INFO_MESSAGE_CARD_TAKE = "Has tomado una Carta";
+    public static final String INFO_MESSAGE_CARD_PLAYED = "Has jugado una Carta";
+    public static final String INFO_MESSAGE_CARD_INVALID = "No puedes jugar esa Carta.";
+    
+    public static String INFO_MESSAGE_VICTORY_LOCAL = "GANASTE LA PARTIDA!!! Puntaje: ";//+Core.winerPoints();
+    //public static String INFO_MESSAGE_VICTORY_OTHERS = "El Jugador "+Core.getActual()+" GANO!! Puntaje: ";//+Core.winerPoints();
+    
+    public static String INFO_MESSAGE_ONECARD_LOCAL = "Te queda una sola Carta";
     
     /**
      * Metodo que imprime cada caracter recibido en el buffer y identifica las flags
@@ -140,11 +155,11 @@ public class Utils {
         for (Color i : Color.values()) {
             if(i.equals(color)){
                 //si el color es none se cambia
-                if(i.equals(Color.NONE)){
-                    System.out.println("CARTA SIN COLOR EN COLOR TO INT");
-                    System.out.flush();
-                    return 2; //retornando verde para cartas sin color
-                }
+//                if(i.equals(Color.NONE)){
+//                    System.out.println("CARTA SIN COLOR EN COLOR TO INT");
+//                    System.out.flush();
+//                    return 2; //retornando verde para cartas sin color
+//                }
                 return num;
             }
             num++;
@@ -231,66 +246,56 @@ public class Utils {
         return index;
     }
     
-    public static boolean textDialog(String text, JFrame father){
-        JPanel panel = new JPanel();
-        JLabel label = new JLabel(text);
-        panel.add(label);
-        String[] options = new String[]{"Yes"};
+    public static void textDialog(String text, JFrame father){
+        MyDialog dialog = new MyDialog(father, Utils.APP_NAME, text, false);
+        dialog.setVisible(true);
+    }
+    
+    public static int colorChooser(String text, JFrame father){
+        JPColorChooser panel = new JPColorChooser();
+        panel.getjLText().setText(text);
+
+        panel.getjPBlue().addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panel.setColor(Utils.colorToInt(Color.AZUL));
+                panel.getjLText().setText("Seleccionado "+Color.AZUL);
+            }
+        });
+
+        panel.getjPGreen().addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panel.setColor(Utils.colorToInt(Color.VERDE));
+                panel.getjLText().setText("Seleccionado "+Color.VERDE);
+            }
+        });
+
+        panel.getjPRed().addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panel.setColor(Utils.colorToInt(Color.ROJO));
+                panel.getjLText().setText("Seleccionado "+Color.ROJO);
+            }
+        });
+
+        panel.getjPYellow().addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panel.setColor(Utils.colorToInt(Color.AMARILLO));
+                panel.getjLText().setText("Seleccionado "+Color.AMARILLO);
+            }
+        });
+
+        String[] options = new String[]{"Ok"};
         int option = JOptionPane.showOptionDialog(father, panel, Utils.APP_NAME,
         JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
         null, options, options[0]);
         if(option == 0) // pressing OK button
         {
-            return true;
-        }
-        return false;
-    }
-    
-        public static int colorChooser(String text, JFrame father){
-            JPColorChooser panel = new JPColorChooser();
-            panel.getjLText().setText(text);
-            
-            panel.getjPBlue().addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    panel.setColor(Utils.colorToInt(Color.AZUL));
-                    panel.getjLText().setText("Seleccionado "+Color.AZUL);
-                }
-            });
-            
-            panel.getjPGreen().addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    panel.setColor(Utils.colorToInt(Color.VERDE));
-                    panel.getjLText().setText("Seleccionado "+Color.VERDE);
-                }
-            });
-            
-            panel.getjPRed().addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    panel.setColor(Utils.colorToInt(Color.ROJO));
-                    panel.getjLText().setText("Seleccionado "+Color.ROJO);
-                }
-            });
-            
-            panel.getjPYellow().addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    panel.setColor(Utils.colorToInt(Color.AMARILLO));
-                    panel.getjLText().setText("Seleccionado "+Color.AMARILLO);
-                }
-            });
-            
-            String[] options = new String[]{"Yes"};
-            int option = JOptionPane.showOptionDialog(father, panel, Utils.APP_NAME,
-            JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
-            null, options, options[0]);
-            if(option == 0) // pressing OK button
-            {
-                return panel.getColor();
-            }
             return panel.getColor();
-            
         }
+        return panel.getColor();
+
+    }
 }

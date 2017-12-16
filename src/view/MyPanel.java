@@ -6,6 +6,7 @@
 
 package view;
 
+import controller.GameViewController;
 import java.awt.FlowLayout;
 import java.util.Iterator;
 import javax.swing.JFrame;
@@ -59,7 +60,8 @@ public class MyPanel extends JPanel{
                         if(Core.isLocalTurn()){
                             Protocol.playCard(cardView.getCard());
                         }else{
-                            System.out.println("NO ES TU TURNO");
+                            System.out.println(Utils.INFO_MESSAGE_NOTURN);
+                            GameViewController.setLocalInfo(Utils.INFO_MESSAGE_NOTURN);
                         }
                     }
                 }

@@ -76,5 +76,13 @@ public class Trama {
         }
         System.out.print("\n");
     }
+    
+    public int Size(){
+        return values.length;
+    }
+    
+    public int getIndex(int num){
+        return values[num];
+    }
 
 }

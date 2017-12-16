@@ -133,11 +133,23 @@ public class SerialComm {
         if(trama.checkTrama()){
             //System.out.println("Envio: ");
             //trama.printTrama();
-            byte[] array = {(byte) Utils.TRAMA_FLAG,(byte) trama.getControl(), (byte) trama.getInformation(), (byte) Utils.TRAMA_FLAG};
-            try {
-                out.write(array);
-            } catch (IOException ex) {
-                Logger.getLogger(SerialComm.class.getName()).log(Level.SEVERE, null, ex);
+            byte b;
+            
+            for(int i=0;i < trama.Size() ; i++){
+                
+                b = (byte) trama.getIndex(i);
+                
+                try {
+                    Thread.sleep(Utils.SLEEP_TIME_SHORT);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(SerialComm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                try {
+                    out.write(b);
+                } catch (IOException ex) {
+                    Logger.getLogger(SerialComm.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         

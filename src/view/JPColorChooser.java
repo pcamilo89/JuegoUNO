@@ -106,7 +106,7 @@ public class JPColorChooser extends javax.swing.JPanel {
         gridBagConstraints.weighty = 0.1;
         add(jLText, gridBagConstraints);
 
-        jPBlue.setBackground(new java.awt.Color(0, 0, 255));
+        jPBlue.setBackground(java.awt.Color.blue);
         jPBlue.setMinimumSize(new java.awt.Dimension(120, 30));
         jPBlue.setPreferredSize(new java.awt.Dimension(120, 30));
 
@@ -128,7 +128,7 @@ public class JPColorChooser extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         add(jPBlue, gridBagConstraints);
 
-        jPGreen.setBackground(new java.awt.Color(0, 255, 51));
+        jPGreen.setBackground(java.awt.Color.green);
         jPGreen.setMinimumSize(new java.awt.Dimension(120, 30));
         jPGreen.setPreferredSize(new java.awt.Dimension(120, 30));
 
@@ -150,7 +150,7 @@ public class JPColorChooser extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         add(jPGreen, gridBagConstraints);
 
-        jPRed.setBackground(new java.awt.Color(255, 51, 0));
+        jPRed.setBackground(java.awt.Color.red);
         jPRed.setMinimumSize(new java.awt.Dimension(120, 30));
         jPRed.setPreferredSize(new java.awt.Dimension(120, 30));
 
@@ -172,7 +172,7 @@ public class JPColorChooser extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         add(jPRed, gridBagConstraints);
 
-        jPYellow.setBackground(new java.awt.Color(255, 255, 0));
+        jPYellow.setBackground(java.awt.Color.yellow);
         jPYellow.setMinimumSize(new java.awt.Dimension(120, 30));
         jPYellow.setPreferredSize(new java.awt.Dimension(120, 30));
 

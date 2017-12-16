@@ -31,19 +31,19 @@ public class Protocol {
     
     static Card newCard = null;
     
-    
+    static int turnChanged;
     /**
      * Metodo que maneja las tramas que entran por el canal de escucha
      * @param trama conformado por 4 bytes donde los dos centrales conforman la informacion deseada
      */
     public static void processTrama(Trama trama){
         
-        try {
-            //PARA TESTEAR
-            Thread.sleep(Utils.SLEEP_TIME);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Protocol.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            //PARA TESTEAR
+//            Thread.sleep(Utils.SLEEP_TIME);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(Protocol.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         
         trama.printTrama();
         
@@ -71,8 +71,18 @@ public class Protocol {
         MainViewController.setTurnLabel("Turno: "+Utils.binaryToInt(to));
         
         //se asigna el turno al destino
-        Core.setActual(Utils.binaryToInt(to));
-
+        if(Utils.binaryToInt(to) != Core.getActual()){
+            Core.setActual(Utils.binaryToInt(to));
+            turnChanged = 1;
+        }
+        else{
+            turnChanged = 0;
+        }
+        
+        
+        //if(Core.getPhase() == Utils.PHASE_GAME)
+        
+        
         
         //si se reciben instrucciones 6 o 7 de manejo de cartas
         if(Utils.binaryToInt(instruction)==Utils.CONTROL_CARD_HAND||Utils.binaryToInt(instruction)==Utils.CONTROL_CARD_PLAY){
@@ -80,7 +90,7 @@ public class Protocol {
             color = info.substring(2, 4);
             card = info.substring(4, 8);
             System.out.println(from+" "+to+" "+instruction+" "+direction+" "+color+" "+card);
-            
+                
                                    
             //instruccion de carta a la mano
             if(Utils.binaryToInt(instruction)==Utils.CONTROL_CARD_HAND){
@@ -88,6 +98,9 @@ public class Protocol {
                 if(Core.getPhase()==Utils.PHASE_GAME){
                     //si estoy en fase de juego actualizo la mesa
                     GameViewController.updateTable();
+                    
+                    String lastCard = "El Jugador "+Core.getActual()+" ha tomado una carta.";
+                    GameViewController.setLastCard(lastCard);
                 }
                 //si recibo carta a la mano y no soy yo
                 if(Utils.binaryToInt(from)!=Core.getLocal()){
@@ -289,11 +302,18 @@ public class Protocol {
                     MainViewController.showGameView();
                 }
                 
-                //se asigna el turno al destino
-                //Core.setActual(Utils.binaryToInt(to));
+                //Setear direccion de la mesa recibida
+                Core.setDirection(Utils.binaryToInt(direction));
                 
                 if(Utils.valueToInt(Utils.Value.NONE) != Utils.binaryToInt(card)){
                     //si la carta recibida es distinta de null (paso de turno)
+                    
+                    //se muestra mensaje en interfaz
+                    String lastCard = "El Jugador "+Utils.binaryToInt(from)+" ha colocado el "+Utils.intToValue(Utils.binaryToInt(card));
+                    lastCard += " y color: "+Utils.intToColor(Utils.binaryToInt(color));
+                    
+                    if(Core.getCardsPlayed() != -1)
+                        GameViewController.setLastCard(lastCard);
                     
                     //se suma uno al contador de cartas jugadas
                     Core.setCardsPlayed(Core.getCardsPlayed()+1);
@@ -306,7 +326,7 @@ public class Protocol {
                     Core.getDrop().addCard(newCard);
 
                     //se setea color en la mesa que llega en trama
-                    Core.setTableColor(Utils.binaryToInt(color));
+                    Core.setTableColor(Utils.binaryToInt(color));                    
 
                     //se actualiza la mesa
                     GameViewController.updateTable();
@@ -318,7 +338,7 @@ public class Protocol {
                     SerialComm.sendTrama(trama);
                     
                     try {
-                        Thread.sleep(Utils.SLEEP_TIME);
+                        Thread.sleep(Utils.SLEEP_TIME_LONG);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Protocol.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -381,8 +401,7 @@ public class Protocol {
                     //si es mi turno (solo sucede si soy JUGADOR INICIAL o JUGADOR GANADOR)
                     //y ya no tengo cartas, soy ganador
                     if(Core.getActual()==Core.getLocal() && Core.getPlayer(Core.getLocal()).size() == 0){
-                        System.out.println("GANE!!!!");
-                        
+                                                
                         //ENVIAR A TODOS MENSAJE DE VICTORIA
                         from = Utils.intToBinary(Core.getLocal(), 2);
                         to = from;
@@ -397,6 +416,9 @@ public class Protocol {
                         trama = new Trama(Utils.binaryToInt(control), Utils.binaryToInt(info));
                         SerialComm.sendTrama(trama);
                         
+                        Core.setPhase(Utils.PHASE_VICTORY);
+                        
+                        
                     }
                 }
             }
@@ -405,13 +427,42 @@ public class Protocol {
             String tableInfo = "J0:"+Core.getPlayer(0).size()+" J1:"+Core.getPlayer(1).size()+" J2:"+Core.getPlayer(2).size()+" J3:"+Core.getPlayer(3).size()
                     +" Draw:"+Core.getDraw().size()+" Drop:"+Core.getDrop().size();
             MainViewController.setCardsLabel(tableInfo);
+            
             //SI YA SE ESTA EN FASE DE JUEGO
-            if(Core.getPhase()>=Utils.PHASE_GAME){
+            if(Core.getPhase() == Utils.PHASE_GAME){
                 //Mostrar la mesa al pasar a fase juego
                 //Core.printTable();
                 System.out.println("TURNO ACTUAL: "+Utils.binaryToInt(to));
                 System.out.println("Contador: "+Core.getCounter()+" Jugadas: "+Core.getCardsPlayed());
-                System.out.println("Color: "+Utils.intToColor(Core.getTableColor()));
+                System.out.println("Sentido: "+Core.getDirection()+" Color: "+Utils.intToColor(Core.getTableColor()));
+                
+                //anuncio de turno                 
+                if(Utils.binaryToInt(to) == Core.getLocal() ){
+                    //si el turno es igual a local
+                    if((!Utils.Value.MAS_DOS.equals(Core.getDrop().showLastCard().getValue()) && !Utils.Value.MAS_CUATRO.equals(Core.getDrop().showLastCard().getValue())) || Utils.Value.NONE.equals(Utils.intToValue(Utils.binaryToInt(card)))){
+                        //si la carta es distinta a +2 o +4
+                        GameViewController.setLocalInfo(Utils.INFO_MESSAGE_ISTURN);
+                        Utils.textDialog(Utils.INFO_MESSAGE_ISTURN,GameViewController.getGameView());
+                    }
+                }else{
+                    //si el turno es distinto a local
+                    GameViewController.setLocalInfo(Utils.INFO_MESSAGE_ANOTHERTURN+Utils.binaryToInt(to));
+                }
+
+                
+                //Chequeo de si un jugador tiene una sola carta
+                for(int i=0;i<Core.getPlayers().length;i++){
+                    Deck deck = Core.getPlayer(i);
+                    if(deck.size() == 1 && (i == Utils.binaryToInt(from))){
+                        if(i == Core.getLocal()){
+                            System.out.println(Utils.INFO_MESSAGE_ONECARD_LOCAL);
+                            Utils.textDialog(Utils.INFO_MESSAGE_ONECARD_LOCAL, GameViewController.getGameView());
+                        }else{
+                            System.out.println("Jugador "+i+" Tiene solo una Carta.");
+                            Utils.textDialog("Jugador "+i+" Tiene solo una Carta.", GameViewController.getGameView());
+                        }
+                    }
+                }
             }
             
         }else if(Utils.binaryToInt(instruction)==Utils.CONTROL_START_GAME){
@@ -541,7 +592,7 @@ public class Protocol {
                 //se obtiene en mano la carta que va a la mesa
                 newCard = null;
                 while(newCard==null){
-                    newCard = Core.getRandomCard();
+                    newCard = Core.getRandomInitialCard();
                 }
                 
                 //se construye la trama a enviar
@@ -565,14 +616,25 @@ public class Protocol {
                 
             }
         }else if(Utils.binaryToInt(instruction)==Utils.CONTROL_VICTORY){
-            //si no soy origen y dentino debo retransmitir y debo desabilitar las interfaces
+            //si no soy origen y dentino, debo retransmitir y debo desabilitar las interfaces
             //debo anunciar al ganador
             //y terminar ejecucion.
+            
+            //test de correccion de turno final
+            Core.setActual(Utils.binaryToInt(from));
+            String test = "from :"+Utils.binaryToInt(from)+" actual: "+Core.getActual();
+            System.out.println(test);
+            
+            
             Core.setPhase(Utils.PHASE_VICTORY);
             if(Core.isLocalTurn()){
-                System.out.println("GANE LA PARTIDA!!!");
+                System.out.println(Utils.INFO_MESSAGE_VICTORY_LOCAL+Core.winerPoints());
+                GameViewController.setLocalInfo(Utils.INFO_MESSAGE_VICTORY_LOCAL+Core.winerPoints());
+                Utils.textDialog(Utils.INFO_MESSAGE_VICTORY_LOCAL+Core.winerPoints(), GameViewController.getGameView());
             }else{
-                System.out.println("El Jugador "+Core.getActual()+" GANO!!");
+                System.out.println("El Jugador "+Core.getActual()+" GANO!! Puntaje: "+Core.winerPoints());
+                GameViewController.setLocalInfo("El Jugador "+Core.getActual()+" GANO!! Puntaje: "+Core.winerPoints());
+                Utils.textDialog("El Jugador "+Core.getActual()+" GANO!! Puntaje: "+Core.winerPoints(), GameViewController.getGameView());
                 SerialComm.sendTrama(trama);
             }
         }
@@ -644,44 +706,57 @@ public class Protocol {
                     info = direction+color+card;
                     System.out.println("INFOS:"+info);
 
+                    GameViewController.setLocalInfo(Utils.INFO_MESSAGE_CARD_PLAYED);
 
                     trama = new Trama(Utils.binaryToInt(control), Utils.binaryToInt(info));
-                    SerialComm.sendTrama(trama);
+                    SerialComm.sendTrama(trama);                   
+                    
+                }else{
+                    GameViewController.setLocalInfo(Utils.INFO_MESSAGE_CARD_INVALID);
                 }
             }else{
                 //si el color de la carta es igual a NONE
-                //paso a formar trama al recibir este mensaje se quita de la mano
-                from = Utils.intToBinary(Core.getLocal(), 2);
-
-                //el turno es del siguiente en el mismo sentido
-                //si no es la ultima carta.
-                if(Core.getPlayer(Core.getLocal()).size()>1){
-                    Core.nextTurn();
-                    to = Utils.intToBinary(Core.getActual(), 2);
-                }else{
-                    to = Utils.intToBinary(Core.getLocal(), 2);
-                }
                 
-                instruction = Utils.intToBinary(Utils.CONTROL_CARD_PLAY, 4);
-                control = from+to+instruction;
-
-                direction = "1"+Utils.intToBinary(Core.getDirection(), 1);
-
-                //DEBO SELECCIONAR COLOR CON UNA VENTANA ADICIONAL ANTES DE ENVIAR COLOR
-                //mientras no elijo un color
-                int selectedColor = -1;
-                while(selectedColor == -1)
-                    selectedColor = Utils.colorChooser(Utils.COLOR_DIALOG, null);
+                //se puede jugar carta sin color si es cambia color o es +4 y no se tiene el color en la mano
+                if(cardToPlay.getValue().equals(Utils.Value.CAMBIA_COLOR) || (cardToPlay.getValue().equals(Utils.Value.MAS_CUATRO) && !Core.isColorInHand())){
                     
-                color = Utils.intToBinary(selectedColor, 2);
+                    //paso a formar trama al recibir este mensaje se quita de la mano
+                    from = Utils.intToBinary(Core.getLocal(), 2);
 
-                card = Utils.intToBinary(Utils.valueToInt(cardToPlay.getValue()), 4);
-                info = direction+color+card;
-                System.out.println("INFOS:"+info);
+                    //el turno es del siguiente en el mismo sentido
+                    //si no es la ultima carta.
+                    if(Core.getPlayer(Core.getLocal()).size()>1){
+                        Core.nextTurn();
+                        to = Utils.intToBinary(Core.getActual(), 2);
+                    }else{
+                        to = Utils.intToBinary(Core.getLocal(), 2);
+                    }
 
+                    instruction = Utils.intToBinary(Utils.CONTROL_CARD_PLAY, 4);
+                    control = from+to+instruction;
 
-                trama = new Trama(Utils.binaryToInt(control), Utils.binaryToInt(info));
-                SerialComm.sendTrama(trama);
+                    direction = "1"+Utils.intToBinary(Core.getDirection(), 1);
+
+                    //DEBO SELECCIONAR COLOR CON UNA VENTANA ADICIONAL ANTES DE ENVIAR COLOR
+                    //mientras no elijo un color se activa selector de color
+                    int selectedColor = -1;
+                    while(selectedColor == -1)
+                        selectedColor = Utils.colorChooser(Utils.COLOR_DIALOG, GameViewController.getGameView());
+
+                    color = Utils.intToBinary(selectedColor, 2);
+
+                    card = Utils.intToBinary(Utils.valueToInt(cardToPlay.getValue()), 4);
+                    info = direction+color+card;
+                    System.out.println("INFOS:"+info);
+
+                    GameViewController.setLocalInfo(Utils.INFO_MESSAGE_CARD_PLAYED);
+                    
+                    trama = new Trama(Utils.binaryToInt(control), Utils.binaryToInt(info));
+                    SerialComm.sendTrama(trama);
+                    
+                }else{
+                    GameViewController.setLocalInfo(Utils.INFO_MESSAGE_CARD_INVALID);
+                }
             }
             
         }

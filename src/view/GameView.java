@@ -8,6 +8,7 @@ package view;
 
 import controller.GameViewController;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -29,6 +30,38 @@ public class GameView extends MyFrame{
         initComponents();
         this.setFather(father);
         GameViewController.load(this);
+    }
+
+    public JLabel getjLLastCard() {
+        return jLLastCard;
+    }
+
+    public void setjLLastCard(JLabel jLLastCard) {
+        this.jLLastCard = jLLastCard;
+    }
+
+    public JLabel getjLLocalInfo() {
+        return jLLocalInfo;
+    }
+
+    public void setjLLocalInfo(JLabel jLLocalInfo) {
+        this.jLLocalInfo = jLLocalInfo;
+    }
+
+    public JLabel getjLPlayers() {
+        return jLPlayers;
+    }
+
+    public void setjLPlayers(JLabel jLPlayers) {
+        this.jLPlayers = jLPlayers;
+    }
+
+    public JPanel getjPColor() {
+        return jPColor;
+    }
+
+    public void setjPColor(JPanel jPColor) {
+        this.jPColor = jPColor;
     }
 
     public JScrollPane getjSPLocalHand() {
@@ -60,6 +93,10 @@ public class GameView extends MyFrame{
         jSPLocalHand = new javax.swing.JScrollPane();
         jPCenter = new javax.swing.JPanel();
         jPDecks = new javax.swing.JPanel();
+        jPColor = new javax.swing.JPanel();
+        jLPlayers = new javax.swing.JLabel();
+        jLLocalInfo = new javax.swing.JLabel();
+        jLLastCard = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,11 +114,51 @@ public class GameView extends MyFrame{
 
         jPDecks.setOpaque(false);
 
+        jPColor.setOpaque(false);
+        jPColor.setPreferredSize(new java.awt.Dimension(120, 75));
+
+        javax.swing.GroupLayout jPColorLayout = new javax.swing.GroupLayout(jPColor);
+        jPColor.setLayout(jPColorLayout);
+        jPColorLayout.setHorizontalGroup(
+            jPColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 120, Short.MAX_VALUE)
+        );
+        jPColorLayout.setVerticalGroup(
+            jPColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 75, Short.MAX_VALUE)
+        );
+
+        jLPlayers.setText("Cartas:");
+        jLPlayers.setMinimumSize(new java.awt.Dimension(100, 14));
+
+        jLLocalInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLLocalInfo.setText("Turno");
+        jLLocalInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jLLastCard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLLastCard.setText("Carta deee");
+        jLLastCard.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPCenterLayout = new javax.swing.GroupLayout(jPCenter);
         jPCenter.setLayout(jPCenterLayout);
         jPCenterLayout.setHorizontalGroup(
             jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(jPCenterLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPCenterLayout.createSequentialGroup()
+                        .addComponent(jLPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 464, Short.MAX_VALUE)
+                        .addComponent(jPColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPCenterLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLLastCard)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPCenterLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLLocalInfo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPCenterLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -90,7 +167,16 @@ public class GameView extends MyFrame{
         );
         jPCenterLayout.setVerticalGroup(
             jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(jPCenterLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 344, Short.MAX_VALUE)
+                .addComponent(jLLastCard)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLLocalInfo)
+                .addContainerGap())
             .addGroup(jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPCenterLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -139,7 +225,11 @@ public class GameView extends MyFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLLastCard;
+    private javax.swing.JLabel jLLocalInfo;
+    private javax.swing.JLabel jLPlayers;
     private javax.swing.JPanel jPCenter;
+    private javax.swing.JPanel jPColor;
     private javax.swing.JPanel jPDecks;
     private javax.swing.JPanel jPTablero;
     private javax.swing.JScrollPane jSPLocalHand;

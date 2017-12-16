@@ -8,7 +8,6 @@ package test;
 
 import javax.swing.JFrame;
 import model.Utils;
-import model.Utils.Color;
 
 /**
  *

@@ -130,6 +130,31 @@ public class Deck {
         return card;
     }
     
+    public Card getRandomInitialCard(){
+        Random randomGenerator = new Random();
+        Card card = null;
+        
+        if(deck.size()>0){
+            while(card == null || card.getValue().equals(Utils.Value.MAS_CUATRO)){
+                int index = randomGenerator.nextInt(deck.size());
+                card = deck.get(index);
+            }
+        }
+        
+        if(card!=null){
+            while(removeCard(card)){
+                if(card.getValue().equals(Value.MAS_CUATRO)||card.getValue().equals(Value.CAMBIA_COLOR)){
+                    
+                    //SETEO DE COLOR EN DECK GET RANDOM
+                    System.out.println("CARTA SIN COLOR EN CARD DECK GET RANDOM");
+                    card.setColor(Color.VERDE);
+
+                }
+            }
+        }
+        return card;
+    }
+    
     /**
      * Metodo que muestra si una carta especifica se encuentra en el mazo
      * @param color Color de la carta

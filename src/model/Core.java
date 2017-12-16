@@ -112,8 +112,11 @@ public class Core {
         for(int i=0;i<players.length;i++){
             Core.players[i] = new Deck();
         }
-        
-    }    
+    }
+    
+    public static Deck[] getPlayers() {
+        return players;
+    }
     
     /**
      * Metodo para obtener mazo Draw
@@ -169,6 +172,18 @@ public class Core {
      */
     public static Card getRandomCard(){
         Card card = draw.getRandomCard();
+        if(draw.isEmpty()){
+            refill();
+        }
+        return card;
+    }
+    
+    /**
+     * Metodo que obtiene carta aleatoria para el inicio de partida de mazo draw
+     * @return carta del mazo
+     */
+    public static Card getRandomInitialCard(){
+        Card card = draw.getRandomInitialCard();
         if(draw.isEmpty()){
             refill();
         }
@@ -307,10 +322,52 @@ public class Core {
         Card card;
         while(myIterator.hasNext()){
             card = (Card) myIterator.next();
-            if(card.getColor().equals(getDrop().showLastCard().getColor()) || card.getValue().equals(getDrop().showLastCard().getValue()) || card.getColor().equals(Utils.Color.NONE)){
+            if(card.getColor().equals(Utils.intToColor(Core.getTableColor())) || card.getValue().equals(getDrop().showLastCard().getValue()) || card.getColor().equals(Utils.Color.NONE)){
                 return true;
             }
         }        
         return false;
     }
+    
+    /**
+     * Metodo para chequear si se tiene el color de la mesa en la mano
+     * @return boolean true or false
+     */
+    public static boolean isColorInHand(){
+        Deck deck = Core.getPlayer(Core.getLocal());
+        Iterator iter = deck.getIterator();
+        
+        while(iter.hasNext()){
+            Card card = (Card) iter.next();
+            if(Utils.colorToInt(card.getColor()) == Core.getTableColor()){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static int winerPoints(){
+        int points = 0;
+        
+        for(int i=0;i<=Core.getMax();i++){
+            Deck deck = getPlayer(i);
+            if (deck.size() > 0){
+                Iterator iter = deck.getIterator();
+                while(iter.hasNext()){
+                    Card card = (Card) iter.next();
+                    int valor = Utils.valueToInt(card.getValue());
+                    if(valor <= 9){
+                        points += valor;
+                    }else if(valor >= 10 && valor <= 12){
+                        points += 20;                    
+                    }else if(valor >= 13 && valor <= 14){
+                        points += 20;
+                    }
+                }
+            }
+        }
+        
+        return points;
+    }
+    
 }
