@@ -32,6 +32,8 @@ public class MainViewController {
        
        mainView.getjTFPort().setText(Utils.comPort);
        mainView.getjTFSpeed().setText(String.valueOf(Utils.BUFFER_SPEED));
+       mainView.getjTFSleep().setText(String.valueOf(Utils.SLEEP_TIME_SHORT));
+       
        mainView.getjBGameStart().setEnabled(false);
        
        mainView.setLocationRelativeTo(null);
@@ -46,6 +48,8 @@ public class MainViewController {
         mainView.getjBPortStart().setEnabled(false);
         mainView.getjBPortStop().setEnabled(false);
         mainView.getjTFPort().setEnabled(false);
+        mainView.getjTFSpeed().setEnabled(false);
+        mainView.getjTFSleep().setEnabled(false);
     }
     
     /**
@@ -54,6 +58,8 @@ public class MainViewController {
     public static void startComm(){
         Utils.comPort = mainView.getjTFPort().getText();
         Utils.BUFFER_SPEED = Integer.parseInt(mainView.getjTFSpeed().getText());
+        Utils.SLEEP_TIME_SHORT = Integer.parseInt(mainView.getjTFSleep().getText());
+        Utils.SLEEP_TIME_LONG = Utils.SLEEP_TIME_SHORT*5;
         Main.startApp();
         mainView.getjBGameStart().setEnabled(true);
     }

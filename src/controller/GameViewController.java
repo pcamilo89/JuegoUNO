@@ -109,12 +109,10 @@ public class GameViewController {
     public static void setLabelPlayers(){
         String text = "<html><b>Cartas</b><br>";
         for(int i=0; i <= Core.getMax() ; i++){
+            //se recorre cada jugador y se muestra cuantas cartas tiene
             int size = Core.getPlayer(i).size();
-            if(i != Core.getLocal()){
-                
-                text += "<b>Jugador "+i+":</b> "+size;
-                text += "<br>";
-            }                
+            text += "<b>Jugador "+i+":</b> "+size; 
+            text += "<br>";
         }
         text += "<b>Draw: </b>"+Core.getDraw().size()+"<br>";
         text += "<b>Drop: </b>"+Core.getDrop().size()+"<br>";
@@ -126,8 +124,8 @@ public class GameViewController {
         JPanel colorpanel = gameView.getjPColor();
         
         GridBagConstraints c = new GridBagConstraints();
-        c.ipadx = 5;
-        c.ipady = 5;
+        c.ipadx = 6;
+        c.ipady = 6;
         
         colorpanel.removeAll();
         if(Core.getDrop().showLastCard().getColor().equals(Utils.Color.NONE) && Core.getCardsPlayed() > 0){
@@ -183,11 +181,5 @@ public class GameViewController {
     
     public static void setLastCard(String text){
         gameView.getjLLastCard().setText(text);
-//        try {
-//            Thread.sleep(2000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(GameViewController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        //gameView.getjLLastCard().setText("");
     }
 }

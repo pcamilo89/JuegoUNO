@@ -52,11 +52,13 @@
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                       <Component id="jLPuerto" max="32767" attributes="0"/>
                                       <Component id="jLSpeed" max="32767" attributes="0"/>
+                                      <Component id="jLSleep" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jTFSpeed" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jTFPort" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jTFSleep" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -89,10 +91,15 @@
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jTFSleep" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLSleep" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jBPortStart" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jBPortStop" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="53" max="32767" attributes="0"/>
+                  <EmptySpace pref="27" max="32767" attributes="0"/>
                   <Component id="jLCards" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLInfo" min="-2" max="-2" attributes="0"/>
@@ -105,6 +112,7 @@
         <Component class="javax.swing.JLabel" name="jLPuerto">
           <Properties>
             <Property name="text" type="java.lang.String" value="Puerto:"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFPort">
@@ -179,9 +187,23 @@
         <Component class="javax.swing.JLabel" name="jLSpeed">
           <Properties>
             <Property name="text" type="java.lang.String" value="Velocidad:"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFSpeed">
+          <Properties>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[60, 20]"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLSleep">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Sleep:"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTFSleep">
           <Properties>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[60, 20]"/>

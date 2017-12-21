@@ -25,6 +25,14 @@ public class MainView extends MyFrame {
         MainViewController.load(this);
     }
 
+    public JTextField getjTFSleep() {
+        return jTFSleep;
+    }
+
+    public void setjTFSleep(JTextField jTFSleep) {
+        this.jTFSleep = jTFSleep;
+    }
+
     public JTextField getjTFSpeed() {
         return jTFSpeed;
     }
@@ -119,12 +127,15 @@ public class MainView extends MyFrame {
         jLTurn = new javax.swing.JLabel();
         jLSpeed = new javax.swing.JLabel();
         jTFSpeed = new javax.swing.JTextField();
+        jLSleep = new javax.swing.JLabel();
+        jTFSleep = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jBGameStart = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLPuerto.setText("Puerto:");
+        jLPuerto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jTFPort.setPreferredSize(new java.awt.Dimension(60, 20));
 
@@ -161,8 +172,14 @@ public class MainView extends MyFrame {
         jLTurn.setPreferredSize(new java.awt.Dimension(100, 25));
 
         jLSpeed.setText("Velocidad:");
+        jLSpeed.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jTFSpeed.setPreferredSize(new java.awt.Dimension(60, 20));
+
+        jLSleep.setText("Sleep:");
+        jLSleep.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jTFSleep.setPreferredSize(new java.awt.Dimension(60, 20));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -184,11 +201,13 @@ public class MainView extends MyFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLPuerto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLSleep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTFSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTFPort, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jTFPort, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTFSleep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,10 +229,14 @@ public class MainView extends MyFrame {
                         .addComponent(jTFSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLSpeed)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTFSleep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLSleep))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBPortStart)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBPortStop)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jLCards, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -288,11 +311,13 @@ public class MainView extends MyFrame {
     private javax.swing.JLabel jLInfo;
     private javax.swing.JLabel jLPlayer;
     private javax.swing.JLabel jLPuerto;
+    private javax.swing.JLabel jLSleep;
     private javax.swing.JLabel jLSpeed;
     private javax.swing.JLabel jLTurn;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTFPort;
+    private javax.swing.JTextField jTFSleep;
     private javax.swing.JTextField jTFSpeed;
     // End of variables declaration//GEN-END:variables
 }

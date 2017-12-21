@@ -38,6 +38,7 @@ public class Main {
             Logger.getLogger(SerialComm.class.getName()).log(Level.SEVERE, null, ex);
         }
         //inicializacion del mazo de juego
+        Core.getDraw().clearDeck();
         Core.getDraw().createDeck();
         Core.setPlayers();
     }

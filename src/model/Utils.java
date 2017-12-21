@@ -68,7 +68,6 @@ public class Utils {
     public static final String INFO_MESSAGE_CARD_INVALID = "No puedes jugar esa Carta.";
     
     public static String INFO_MESSAGE_VICTORY_LOCAL = "GANASTE LA PARTIDA!!! Puntaje: ";//+Core.winerPoints();
-    //public static String INFO_MESSAGE_VICTORY_OTHERS = "El Jugador "+Core.getActual()+" GANO!! Puntaje: ";//+Core.winerPoints();
     
     public static String INFO_MESSAGE_ONECARD_LOCAL = "Te queda una sola Carta";
     

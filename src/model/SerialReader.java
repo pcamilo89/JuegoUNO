@@ -60,7 +60,6 @@ public class SerialReader implements Runnable{
             //Ciclo de lectura del buffer de entrada
             while ( ( len = this.in.read(buffer)) > -1 && live)
             {
-
                 try {
                     //PARA TESTEAR
                     Thread.sleep(Utils.SLEEP_TIME_SHORT);
