@@ -45,6 +45,9 @@ public class CardView extends JLabel{
         ImageIcon imageIcon;
         int newWidth = (int) (cardWidth/scale);
         int newHeight = (int) (cardHeight/scale);
+        
+        this.setSize(newWidth, newHeight);
+        
         if(card!= null){
             if(!card.getColor().equals(Color.NONE)){
                 imageIcon = new ImageIcon("resources/"+card.getValue()+"_"+card.getColor()+".png");
@@ -99,7 +102,7 @@ public class CardView extends JLabel{
         return father;
     }
 
-    public void setFather(MyPanel parent) {
+    public void setFather(JPanel parent) {
         this.father = parent;
     }
     

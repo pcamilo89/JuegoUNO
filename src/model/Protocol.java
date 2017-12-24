@@ -97,7 +97,7 @@ public class Protocol {
                 
                 if(Core.getPhase()==Utils.PHASE_GAME){
                     //si estoy en fase de juego actualizo la mesa
-                    GameViewController.updateTable();
+                    
                     
                     String lastCard = "El Jugador "+Core.getActual()+" ha tomado una carta.";
                     GameViewController.setLastCard(lastCard);
@@ -329,7 +329,7 @@ public class Protocol {
                     Core.setTableColor(Utils.binaryToInt(color));                    
 
                     //se actualiza la mesa
-                    GameViewController.updateTable();
+                    
                 }
                 
                 //si yo no envie el mensaje
@@ -432,6 +432,8 @@ public class Protocol {
             if(Core.getPhase() == Utils.PHASE_GAME){
                 //Mostrar la mesa al pasar a fase juego
                 //Core.printTable();
+                GameViewController.updateTable();
+                
                 System.out.println("TURNO ACTUAL: "+Utils.binaryToInt(to));
                 System.out.println("Contador: "+Core.getCounter()+" Jugadas: "+Core.getCardsPlayed());
                 System.out.println("Sentido: "+Core.getDirection()+" Color: "+Utils.intToColor(Core.getTableColor()));
@@ -619,6 +621,7 @@ public class Protocol {
             //si no soy origen y dentino, debo retransmitir y debo desabilitar las interfaces
             //debo anunciar al ganador
             //y terminar ejecucion.
+            GameViewController.updateTable();
             
             //test de correccion de turno final
             Core.setActual(Utils.binaryToInt(from));

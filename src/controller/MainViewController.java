@@ -6,6 +6,7 @@
 
 package controller;
 
+import java.awt.Dimension;
 import model.Protocol;
 import model.Utils;
 import view.GameView;
@@ -142,6 +143,8 @@ public class MainViewController {
     
     public static void showGameView(){
         GameView gameView = new GameView(mainView);
+        gameView.setMinimumSize(new Dimension(600, 600));
+        gameView.setSize(600, 600);
         gameView.setVisible(true);
     }
 }

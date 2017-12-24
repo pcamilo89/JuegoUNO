@@ -79,7 +79,63 @@ public class GameView extends MyFrame{
     public void setjPDecks(JPanel jPDecks) {
         this.jPDecks = jPDecks;
     }
-    
+
+    public JPanel getjPUp() {
+        return jPUp;
+    }
+
+    public void setjPUp(JPanel jPUp) {
+        this.jPUp = jPUp;
+    }
+
+    public JPanel getjPLeft() {
+        return jPLeft;
+    }
+
+    public void setjPLeft(JPanel jPLeft) {
+        this.jPLeft = jPLeft;
+    }
+
+    public JPanel getjPRight() {
+        return jPRight;
+    }
+
+    public void setjPRight(JPanel jPRight) {
+        this.jPRight = jPRight;
+    }
+
+    public JPanel getjPLeftInfo() {
+        return jPLeftInfo;
+    }
+
+    public void setjPLeftInfo(JPanel jPLeftInfo) {
+        this.jPLeftInfo = jPLeftInfo;
+    }
+
+    public JPanel getjPRightInfo() {
+        return jPRightInfo;
+    }
+
+    public void setjPRightInfo(JPanel jPRightInfo) {
+        this.jPRightInfo = jPRightInfo;
+    }
+
+    public JPanel getjPUPInfo() {
+        return jPUPInfo;
+    }
+
+    public void setjPUPInfo(JPanel jPUPInfo) {
+        this.jPUPInfo = jPUPInfo;
+    }
+
+    public JLabel getjLDirection() {
+        return jLDirection;
+    }
+
+    public void setjLDirection(JLabel jLDirection) {
+        this.jLDirection = jLDirection;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,12 +147,23 @@ public class GameView extends MyFrame{
 
         jPTablero = new javax.swing.JPanel();
         jSPLocalHand = new javax.swing.JScrollPane();
+        jPOverlay = new javax.swing.JPanel();
+        jPOponentTop = new javax.swing.JPanel();
+        jPUp = new javax.swing.JPanel();
+        jPUPInfo = new javax.swing.JPanel();
+        jPOponentSides = new javax.swing.JPanel();
+        jPLeft = new javax.swing.JPanel();
+        jPRight = new javax.swing.JPanel();
+        jPLeftInfo = new javax.swing.JPanel();
+        jPRightInfo = new javax.swing.JPanel();
         jPCenter = new javax.swing.JPanel();
         jPDecks = new javax.swing.JPanel();
         jPColor = new javax.swing.JPanel();
         jLPlayers = new javax.swing.JLabel();
         jLLocalInfo = new javax.swing.JLabel();
         jLLastCard = new javax.swing.JLabel();
+        jPDirection = new javax.swing.JPanel();
+        jLDirection = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,13 +176,163 @@ public class GameView extends MyFrame{
         jSPLocalHand.setPreferredSize(new java.awt.Dimension(2, 150));
         jPTablero.add(jSPLocalHand, java.awt.BorderLayout.SOUTH);
 
+        jPOverlay.setBackground(new java.awt.Color(0, 153, 153));
+        jPOverlay.setLayout(new javax.swing.OverlayLayout(jPOverlay));
+
+        jPOponentTop.setOpaque(false);
+
+        jPUp.setOpaque(false);
+        jPUp.setPreferredSize(new java.awt.Dimension(200, 100));
+
+        javax.swing.GroupLayout jPUpLayout = new javax.swing.GroupLayout(jPUp);
+        jPUp.setLayout(jPUpLayout);
+        jPUpLayout.setHorizontalGroup(
+            jPUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        jPUpLayout.setVerticalGroup(
+            jPUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        jPUPInfo.setOpaque(false);
+        jPUPInfo.setPreferredSize(new java.awt.Dimension(40, 20));
+
+        javax.swing.GroupLayout jPUPInfoLayout = new javax.swing.GroupLayout(jPUPInfo);
+        jPUPInfo.setLayout(jPUPInfoLayout);
+        jPUPInfoLayout.setHorizontalGroup(
+            jPUPInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+        jPUPInfoLayout.setVerticalGroup(
+            jPUPInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPOponentTopLayout = new javax.swing.GroupLayout(jPOponentTop);
+        jPOponentTop.setLayout(jPOponentTopLayout);
+        jPOponentTopLayout.setHorizontalGroup(
+            jPOponentTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPOponentTopLayout.createSequentialGroup()
+                .addContainerGap(220, Short.MAX_VALUE)
+                .addComponent(jPUp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(220, Short.MAX_VALUE))
+            .addGroup(jPOponentTopLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPUPInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPOponentTopLayout.setVerticalGroup(
+            jPOponentTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPOponentTopLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPUp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPUPInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(338, Short.MAX_VALUE))
+        );
+
+        jPOverlay.add(jPOponentTop);
+
+        jPOponentSides.setOpaque(false);
+
+        jPLeft.setOpaque(false);
+        jPLeft.setPreferredSize(new java.awt.Dimension(70, 200));
+
+        javax.swing.GroupLayout jPLeftLayout = new javax.swing.GroupLayout(jPLeft);
+        jPLeft.setLayout(jPLeftLayout);
+        jPLeftLayout.setHorizontalGroup(
+            jPLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 70, Short.MAX_VALUE)
+        );
+        jPLeftLayout.setVerticalGroup(
+            jPLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+
+        jPRight.setOpaque(false);
+        jPRight.setPreferredSize(new java.awt.Dimension(70, 200));
+
+        javax.swing.GroupLayout jPRightLayout = new javax.swing.GroupLayout(jPRight);
+        jPRight.setLayout(jPRightLayout);
+        jPRightLayout.setHorizontalGroup(
+            jPRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 70, Short.MAX_VALUE)
+        );
+        jPRightLayout.setVerticalGroup(
+            jPRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+
+        jPLeftInfo.setOpaque(false);
+        jPLeftInfo.setPreferredSize(new java.awt.Dimension(20, 40));
+
+        javax.swing.GroupLayout jPLeftInfoLayout = new javax.swing.GroupLayout(jPLeftInfo);
+        jPLeftInfo.setLayout(jPLeftInfoLayout);
+        jPLeftInfoLayout.setHorizontalGroup(
+            jPLeftInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+        jPLeftInfoLayout.setVerticalGroup(
+            jPLeftInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        jPRightInfo.setOpaque(false);
+        jPRightInfo.setPreferredSize(new java.awt.Dimension(20, 40));
+
+        javax.swing.GroupLayout jPRightInfoLayout = new javax.swing.GroupLayout(jPRightInfo);
+        jPRightInfo.setLayout(jPRightInfoLayout);
+        jPRightInfoLayout.setHorizontalGroup(
+            jPRightInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+        jPRightInfoLayout.setVerticalGroup(
+            jPRightInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPOponentSidesLayout = new javax.swing.GroupLayout(jPOponentSides);
+        jPOponentSides.setLayout(jPOponentSidesLayout);
+        jPOponentSidesLayout.setHorizontalGroup(
+            jPOponentSidesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPOponentSidesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPLeft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPLeftInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPRightInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jPRight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPOponentSidesLayout.setVerticalGroup(
+            jPOponentSidesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPOponentSidesLayout.createSequentialGroup()
+                .addContainerGap(44, Short.MAX_VALUE)
+                .addGroup(jPOponentSidesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPRight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPLeft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(44, Short.MAX_VALUE))
+            .addGroup(jPOponentSidesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPOponentSidesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPLeftInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPRightInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPOverlay.add(jPOponentSides);
+
         jPCenter.setBackground(new java.awt.Color(0, 153, 153));
+        jPCenter.setOpaque(false);
         jPCenter.setPreferredSize(new java.awt.Dimension(640, 480));
 
         jPDecks.setOpaque(false);
 
         jPColor.setOpaque(false);
-        jPColor.setPreferredSize(new java.awt.Dimension(120, 75));
+        jPColor.setPreferredSize(new java.awt.Dimension(120, 50));
 
         javax.swing.GroupLayout jPColorLayout = new javax.swing.GroupLayout(jPColor);
         jPColor.setLayout(jPColorLayout);
@@ -125,7 +342,7 @@ public class GameView extends MyFrame{
         );
         jPColorLayout.setVerticalGroup(
             jPColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 75, Short.MAX_VALUE)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
 
         jLPlayers.setText("Cartas:");
@@ -152,18 +369,16 @@ public class GameView extends MyFrame{
                         .addComponent(jPColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPCenterLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLLastCard)
+                        .addGroup(jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLLastCard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLLocalInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPCenterLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLLocalInfo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPCenterLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 315, Short.MAX_VALUE)
                     .addComponent(jPDecks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 315, Short.MAX_VALUE)))
         );
         jPCenterLayout.setVerticalGroup(
             jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,19 +387,50 @@ public class GameView extends MyFrame{
                 .addGroup(jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 344, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLLastCard)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLLocalInfo)
                 .addContainerGap())
             .addGroup(jPCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPCenterLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 235, Short.MAX_VALUE)
                     .addComponent(jPDecks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 235, Short.MAX_VALUE)))
+        );
+
+        jPOverlay.add(jPCenter);
+
+        jPDirection.setOpaque(false);
+
+        jLDirection.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLDirection.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLDirection.setPreferredSize(new java.awt.Dimension(350, 300));
+
+        javax.swing.GroupLayout jPDirectionLayout = new javax.swing.GroupLayout(jPDirection);
+        jPDirection.setLayout(jPDirectionLayout);
+        jPDirectionLayout.setHorizontalGroup(
+            jPDirectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 640, Short.MAX_VALUE)
+            .addGroup(jPDirectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPDirectionLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLDirection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPDirectionLayout.setVerticalGroup(
+            jPDirectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 480, Short.MAX_VALUE)
+            .addGroup(jPDirectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPDirectionLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLDirection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        jPTablero.add(jPCenter, java.awt.BorderLayout.CENTER);
+        jPOverlay.add(jPDirection);
+
+        jPTablero.add(jPOverlay, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPTablero, java.awt.BorderLayout.CENTER);
 
@@ -225,13 +471,24 @@ public class GameView extends MyFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLDirection;
     private javax.swing.JLabel jLLastCard;
     private javax.swing.JLabel jLLocalInfo;
     private javax.swing.JLabel jLPlayers;
     private javax.swing.JPanel jPCenter;
     private javax.swing.JPanel jPColor;
     private javax.swing.JPanel jPDecks;
+    private javax.swing.JPanel jPDirection;
+    private javax.swing.JPanel jPLeft;
+    private javax.swing.JPanel jPLeftInfo;
+    private javax.swing.JPanel jPOponentSides;
+    private javax.swing.JPanel jPOponentTop;
+    private javax.swing.JPanel jPOverlay;
+    private javax.swing.JPanel jPRight;
+    private javax.swing.JPanel jPRightInfo;
     private javax.swing.JPanel jPTablero;
+    private javax.swing.JPanel jPUPInfo;
+    private javax.swing.JPanel jPUp;
     private javax.swing.JScrollPane jSPLocalHand;
     // End of variables declaration//GEN-END:variables
 }
