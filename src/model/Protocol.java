@@ -79,11 +79,6 @@ public class Protocol {
             turnChanged = 0;
         }
         
-        
-        //if(Core.getPhase() == Utils.PHASE_GAME)
-        
-        
-        
         //si se reciben instrucciones 6 o 7 de manejo de cartas
         if(Utils.binaryToInt(instruction)==Utils.CONTROL_CARD_HAND||Utils.binaryToInt(instruction)==Utils.CONTROL_CARD_PLAY){
             direction = info.substring(1,2);
@@ -97,7 +92,6 @@ public class Protocol {
                 
                 if(Core.getPhase()==Utils.PHASE_GAME){
                     //si estoy en fase de juego actualizo la mesa
-                    
                     
                     String lastCard = "El Jugador "+Core.getActual()+" ha tomado una carta.";
                     GameViewController.setLastCard(lastCard);
@@ -429,9 +423,8 @@ public class Protocol {
             MainViewController.setCardsLabel(tableInfo);
             
             //SI YA SE ESTA EN FASE DE JUEGO
-            if(Core.getPhase() == Utils.PHASE_GAME){
-                //Mostrar la mesa al pasar a fase juego
-                //Core.printTable();
+            if(Core.getPhase() == Utils.PHASE_GAME){                                
+                //actualizar la mesa al pasar a fase juego
                 GameViewController.updateTable();
                 
                 System.out.println("TURNO ACTUAL: "+Utils.binaryToInt(to));
@@ -442,9 +435,13 @@ public class Protocol {
                 if(Utils.binaryToInt(to) == Core.getLocal() ){
                     //si el turno es igual a local
                     if((!Utils.Value.MAS_DOS.equals(Core.getDrop().showLastCard().getValue()) && !Utils.Value.MAS_CUATRO.equals(Core.getDrop().showLastCard().getValue())) || Utils.Value.NONE.equals(Utils.intToValue(Utils.binaryToInt(card)))){
-                        //si la carta es distinta a +2 o +4
+                        //si la carta es distinta a +2 y +4 o es un pase de turno
+                        //pendiente si es el primer turno de juego
                         GameViewController.setLocalInfo(Utils.INFO_MESSAGE_ISTURN);
                         Utils.textDialog(Utils.INFO_MESSAGE_ISTURN,GameViewController.getGameView());
+                        
+                        //sonido de turno
+                        Utils.playSound(Utils.PATH_SOUND_TURN);
                     }
                 }else{
                     //si el turno es distinto a local
@@ -462,6 +459,7 @@ public class Protocol {
                         }else{
                             System.out.println("Jugador "+i+" Tiene solo una Carta.");
                             Utils.textDialog("Jugador "+i+" Tiene solo una Carta.", GameViewController.getGameView());
+                            Utils.playSound(Utils.PATH_SOUND_ALERT);
                         }
                     }
                 }
@@ -634,6 +632,9 @@ public class Protocol {
                 System.out.println(Utils.INFO_MESSAGE_VICTORY_LOCAL+Core.winerPoints());
                 GameViewController.setLocalInfo(Utils.INFO_MESSAGE_VICTORY_LOCAL+Core.winerPoints());
                 Utils.textDialog(Utils.INFO_MESSAGE_VICTORY_LOCAL+Core.winerPoints(), GameViewController.getGameView());
+                
+                //playSound Victory
+                Utils.playSound(Utils.PATH_SOUND_VICTORY);
             }else{
                 System.out.println("El Jugador "+Core.getActual()+" GANO!! Puntaje: "+Core.winerPoints());
                 GameViewController.setLocalInfo("El Jugador "+Core.getActual()+" GANO!! Puntaje: "+Core.winerPoints());

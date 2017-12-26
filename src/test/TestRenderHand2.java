@@ -6,15 +6,10 @@
 
 package test;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import model.Utils;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
-import view.CardView;
 import view.HandPanel;
 
 /**

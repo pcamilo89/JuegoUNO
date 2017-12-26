@@ -6,6 +6,8 @@
 
 package view;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -32,4 +34,10 @@ public class MyFrame extends JFrame{
         this.father = father;
     }
     
+    public void setAppIcon(){
+        ImageIcon icon = new ImageIcon("resources/App_logo.png");
+        Image img = icon.getImage();
+        Image newimg = img.getScaledInstance(64 ,64 ,  java.awt.Image.SCALE_SMOOTH);
+        this.setIconImage(newimg);
+    }
 }

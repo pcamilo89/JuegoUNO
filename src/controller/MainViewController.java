@@ -30,6 +30,7 @@ public class MainViewController {
     public static void load(MainView from){
        mainView = from;
        mainView.setTitle(Utils.APP_NAME);
+       mainView.setAppIcon();
        
        mainView.getjTFPort().setText(Utils.comPort);
        mainView.getjTFSpeed().setText(String.valueOf(Utils.BUFFER_SPEED));

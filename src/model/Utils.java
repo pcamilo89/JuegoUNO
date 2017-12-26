@@ -6,7 +6,16 @@
 
 package model;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import view.JPColorChooser;
@@ -70,6 +79,11 @@ public class Utils {
     public static String INFO_MESSAGE_VICTORY_LOCAL = "GANASTE LA PARTIDA!!! Puntaje: ";//+Core.winerPoints();
     
     public static String INFO_MESSAGE_ONECARD_LOCAL = "Te queda una sola Carta";
+    
+    public static String PATH_SOUND_VICTORY = "resources/Victory.wav";
+    public static String PATH_SOUND_ALERT = "resources/Alert.wav";
+    public static String PATH_SOUND_TURN = "resources/Turn.wav";
+    public static String PATH_SOUND_CARD = "resources/CardSound.wav";
     
     /**
      * Metodo que imprime cada caracter recibido en el buffer y identifica las flags
@@ -296,5 +310,55 @@ public class Utils {
         }
         return panel.getColor();
 
+    }
+    
+    public static void playSound(String path){
+        new Thread(new Runnable() {
+            // The wrapper thread is unnecessary, unless it blocks on the
+            // Clip finishing; see comments.
+            @Override
+            public void run() {
+                File audioFile = new File(path);
+                try {
+                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+
+                    AudioFormat format = audioStream.getFormat();
+
+                    DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
+
+                    SourceDataLine audioLine = (SourceDataLine) AudioSystem.getLine(info);
+
+                    audioLine.open(format);
+
+                    audioLine.start();
+
+                    //System.out.println("Playback started.");
+
+                    byte[] bytesBuffer = new byte[1024];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = audioStream.read(bytesBuffer)) != -1) {
+                        audioLine.write(bytesBuffer, 0, bytesRead);
+                    }
+
+                    audioLine.drain();
+                    audioLine.close();
+                    audioStream.close();
+
+                    //System.out.println("Playback completed.");
+
+                } catch (UnsupportedAudioFileException ex) {
+                    System.out.println("The specified audio file is not supported.");
+                    ex.printStackTrace();
+                } catch (LineUnavailableException ex) {
+                    System.out.println("Audio line for playing back is unavailable.");
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    System.out.println("Error playing the audio file.");
+                    ex.printStackTrace();
+                }
+            }
+
+        }).start();
     }
 }

@@ -49,6 +49,7 @@ public class GameViewController {
     public static void load(GameView from){
         GameViewController.gameView = from;
         gameView.setTitle(Utils.APP_NAME+" - Jugador "+Core.getLocal());
+        gameView.setAppIcon();
         
         panel =  new MyPanel(gameView, Core.getPlayer(Core.getLocal()));
         gameView.getjSPLocalHand().setViewportView(panel);
