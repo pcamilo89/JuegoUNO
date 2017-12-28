@@ -121,7 +121,7 @@ public class Deck {
                 if(card.getValue().equals(Value.MAS_CUATRO)||card.getValue().equals(Value.CAMBIA_COLOR)){
                     
                     //SETEO DE COLOR EN DECK GET RANDOM
-                    System.out.println("CARTA SIN COLOR EN CARD DECK GET RANDOM");
+                    //System.out.println("CARTA SIN COLOR EN CARD DECK GET RANDOM");
                     card.setColor(Color.VERDE);
 
                 }
@@ -146,7 +146,7 @@ public class Deck {
                 if(card.getValue().equals(Value.MAS_CUATRO)||card.getValue().equals(Value.CAMBIA_COLOR)){
                     
                     //SETEO DE COLOR EN DECK GET RANDOM
-                    System.out.println("CARTA SIN COLOR EN CARD DECK GET RANDOM");
+                    //System.out.println("CARTA SIN COLOR EN CARD DECK GET RANDOM");
                     card.setColor(Color.VERDE);
 
                 }

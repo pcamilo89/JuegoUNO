@@ -8,7 +8,9 @@ package view;
 
 import controller.MainViewController;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 
 /**
@@ -104,8 +106,22 @@ public class MainView extends MyFrame {
     public void setjLInfo(JLabel jLInfo) {
         this.jLInfo = jLInfo;
     }
-    
-    
+
+    public JProgressBar getjPBCardCounter() {
+        return jPBCardCounter;
+    }
+
+    public void setjPBCardCounter(JProgressBar jPBCardCounter) {
+        this.jPBCardCounter = jPBCardCounter;
+    }
+
+    public JCheckBox getjCBSound() {
+        return jCBSound;
+    }
+
+    public void setjCBSound(JCheckBox jCBSound) {
+        this.jCBSound = jCBSound;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,29 +131,96 @@ public class MainView extends MyFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel1 = new javax.swing.JPanel();
+        jPCentral = new javax.swing.JPanel();
+        jPComConfig = new javax.swing.JPanel();
         jLPuerto = new javax.swing.JLabel();
         jTFPort = new javax.swing.JTextField();
-        jBPortStart = new javax.swing.JButton();
-        jBPortStop = new javax.swing.JButton();
-        jLInfo = new javax.swing.JLabel();
-        jLCards = new javax.swing.JLabel();
-        jLPlayer = new javax.swing.JLabel();
-        jLTurn = new javax.swing.JLabel();
         jLSpeed = new javax.swing.JLabel();
         jTFSpeed = new javax.swing.JTextField();
         jLSleep = new javax.swing.JLabel();
         jTFSleep = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
+        jBPortStart = new javax.swing.JButton();
+        jBPortStop = new javax.swing.JButton();
+        jPPlayerInfo = new javax.swing.JPanel();
+        jLPlayer = new javax.swing.JLabel();
+        jLTurn = new javax.swing.JLabel();
+        jPGameInfo = new javax.swing.JPanel();
+        jLCards = new javax.swing.JLabel();
+        jLInfo = new javax.swing.JLabel();
+        jPBCardCounter = new javax.swing.JProgressBar();
+        jPOptions = new javax.swing.JPanel();
+        jCBSound = new javax.swing.JCheckBox();
+        jPBottom = new javax.swing.JPanel();
         jBGameStart = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPCentral.setPreferredSize(new java.awt.Dimension(320, 280));
+
+        jPComConfig.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPComConfig.setLayout(new java.awt.GridBagLayout());
+
+        jLPuerto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLPuerto.setText("Puerto:");
         jLPuerto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        jPComConfig.add(jLPuerto, gridBagConstraints);
 
         jTFPort.setPreferredSize(new java.awt.Dimension(60, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        jPComConfig.add(jTFPort, gridBagConstraints);
+
+        jLSpeed.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLSpeed.setText("Velocidad:");
+        jLSpeed.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        jPComConfig.add(jLSpeed, gridBagConstraints);
+
+        jTFSpeed.setPreferredSize(new java.awt.Dimension(60, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        jPComConfig.add(jTFSpeed, gridBagConstraints);
+
+        jLSleep.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLSleep.setText("Sleep:");
+        jLSleep.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        jPComConfig.add(jLSleep, gridBagConstraints);
+
+        jTFSleep.setPreferredSize(new java.awt.Dimension(60, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        jPComConfig.add(jTFSleep, gridBagConstraints);
 
         jBPortStart.setText("Start");
         jBPortStart.addActionListener(new java.awt.event.ActionListener() {
@@ -145,6 +228,13 @@ public class MainView extends MyFrame {
                 jBPortStartActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        jPComConfig.add(jBPortStart, gridBagConstraints);
 
         jBPortStop.setText("Stop");
         jBPortStop.addActionListener(new java.awt.event.ActionListener() {
@@ -152,100 +242,82 @@ public class MainView extends MyFrame {
                 jBPortStopActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        jPComConfig.add(jBPortStop, gridBagConstraints);
 
-        jLInfo.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
-        jLInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLInfo.setPreferredSize(new java.awt.Dimension(200, 30));
+        jPPlayerInfo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPPlayerInfo.setLayout(new java.awt.GridLayout(2, 0));
+
+        jLPlayer.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        jLPlayer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLPlayer.setPreferredSize(new java.awt.Dimension(100, 25));
+        jPPlayerInfo.add(jLPlayer);
+
+        jLTurn.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        jLTurn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLTurn.setPreferredSize(new java.awt.Dimension(100, 25));
+        jPPlayerInfo.add(jLTurn);
+
+        jPGameInfo.setPreferredSize(new java.awt.Dimension(244, 50));
+        jPGameInfo.setLayout(new java.awt.GridLayout(0, 1));
 
         jLCards.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         jLCards.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLCards.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLCards.setPreferredSize(new java.awt.Dimension(300, 30));
+        jPGameInfo.add(jLCards);
 
-        jLPlayer.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
-        jLPlayer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLPlayer.setPreferredSize(new java.awt.Dimension(100, 25));
+        jLInfo.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        jLInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLInfo.setPreferredSize(new java.awt.Dimension(200, 30));
+        jPGameInfo.add(jLInfo);
+        jPGameInfo.add(jPBCardCounter);
 
-        jLTurn.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        jLTurn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLTurn.setPreferredSize(new java.awt.Dimension(100, 25));
+        jPOptions.setLayout(new java.awt.GridLayout(0, 1));
 
-        jLSpeed.setText("Velocidad:");
-        jLSpeed.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jCBSound.setSelected(true);
+        jCBSound.setText("Sound");
+        jPOptions.add(jCBSound);
 
-        jTFSpeed.setPreferredSize(new java.awt.Dimension(60, 20));
-
-        jLSleep.setText("Sleep:");
-        jLSleep.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jTFSleep.setPreferredSize(new java.awt.Dimension(60, 20));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPCentralLayout = new javax.swing.GroupLayout(jPCentral);
+        jPCentral.setLayout(jPCentralLayout);
+        jPCentralLayout.setHorizontalGroup(
+            jPCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPCentralLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 50, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLCards, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(50, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jBPortStop, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jBPortStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLPuerto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLSleep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTFSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTFPort, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTFSleep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLTurn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGroup(jPCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPGameInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPCentralLayout.createSequentialGroup()
+                        .addGroup(jPCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPOptions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPComConfig, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 67, Short.MAX_VALUE)
+                        .addComponent(jPPlayerInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPCentralLayout.setVerticalGroup(
+            jPCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPCentralLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTFPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLPuerto)
-                    .addComponent(jLPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPPlayerInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPComConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLTurn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTFSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLSpeed)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTFSleep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLSleep))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBPortStart)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBPortStop)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(jLCards, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPGameInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jPCentral, java.awt.BorderLayout.CENTER);
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPBottom.setBackground(new java.awt.Color(204, 204, 204));
 
         jBGameStart.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         jBGameStart.setText("START GAME");
@@ -255,9 +327,9 @@ public class MainView extends MyFrame {
                 jBGameStartActionPerformed(evt);
             }
         });
-        jPanel2.add(jBGameStart);
+        jPBottom.add(jBGameStart);
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.SOUTH);
+        getContentPane().add(jPBottom, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -307,6 +379,7 @@ public class MainView extends MyFrame {
     private javax.swing.JButton jBGameStart;
     private javax.swing.JButton jBPortStart;
     private javax.swing.JButton jBPortStop;
+    private javax.swing.JCheckBox jCBSound;
     private javax.swing.JLabel jLCards;
     private javax.swing.JLabel jLInfo;
     private javax.swing.JLabel jLPlayer;
@@ -314,8 +387,13 @@ public class MainView extends MyFrame {
     private javax.swing.JLabel jLSleep;
     private javax.swing.JLabel jLSpeed;
     private javax.swing.JLabel jLTurn;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JProgressBar jPBCardCounter;
+    private javax.swing.JPanel jPBottom;
+    private javax.swing.JPanel jPCentral;
+    private javax.swing.JPanel jPComConfig;
+    private javax.swing.JPanel jPGameInfo;
+    private javax.swing.JPanel jPOptions;
+    private javax.swing.JPanel jPPlayerInfo;
     private javax.swing.JTextField jTFPort;
     private javax.swing.JTextField jTFSleep;
     private javax.swing.JTextField jTFSpeed;

@@ -24,15 +24,18 @@ public class Main {
     /**
      * Metodo para inicializar el el puerto y coneccion asi como parametros iniciales
      */
-    public static void startApp(){
+    public static boolean startApp(){
+        boolean status = false;
         try {
             if(SerialComm.getSerialPort() == null&&reader==null){
                 //Iniciando conneccion serial
                 SerialComm.connect(Utils.comPort);
                 System.out.println("Serial Comm Iniciado en: "+Utils.comPort);
+                
                 //Iniciando Hilo de Entrada por Serial
                 reader = new SerialReader(SerialComm.getIn());
                 new Thread(reader).start();
+                status = true;
             }
         } catch (Exception ex) {
             Logger.getLogger(SerialComm.class.getName()).log(Level.SEVERE, null, ex);
@@ -41,12 +44,14 @@ public class Main {
         Core.getDraw().clearDeck();
         Core.getDraw().createDeck();
         Core.setPlayers();
+        return status;
     }
     
     /**
      * Metodo para detener la coneccion y el hilo de escucha
      */
-    public static void stopApp(){
+    public static boolean stopApp(){
+        boolean status = false;
        if(SerialComm.getSerialPort() != null&&reader!=null){
            //Primero cerrar hilo de esucha
            reader.setLive(false);
@@ -55,7 +60,9 @@ public class Main {
            //Luego se cierra puerto
            SerialComm.close();
            System.out.println("Serial Comm Finalizado");
+           status = true;
        }
+       return status;
     }
     
     /**

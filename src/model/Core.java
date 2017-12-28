@@ -346,7 +346,7 @@ public class Core {
         return false;
     }
     
-    public static int winerPoints(){
+    public static int getWinerPoints(){
         int points = 0;
         
         for(int i=0;i<=Core.getMax();i++){
@@ -364,6 +364,19 @@ public class Core {
                         points += 20;
                     }
                 }
+            }
+        }
+        
+        return points;
+    }
+    
+    public static int getCardAmount(){
+        int points = 0;
+        
+        for(int i=0;i<=Core.getMax();i++){
+            Deck deck = getPlayer(i);
+            if (deck.size() > 0){
+                points += deck.size();
             }
         }
         

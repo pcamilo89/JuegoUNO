@@ -7,6 +7,8 @@
 package controller;
 
 import java.awt.Dimension;
+import javax.swing.JProgressBar;
+import model.Core;
 import model.Protocol;
 import model.Utils;
 import view.GameView;
@@ -36,10 +38,13 @@ public class MainViewController {
        mainView.getjTFSpeed().setText(String.valueOf(Utils.BUFFER_SPEED));
        mainView.getjTFSleep().setText(String.valueOf(Utils.SLEEP_TIME_SHORT));
        
+       mainView.getjBPortStop().setEnabled(false);
        mainView.getjBGameStart().setEnabled(false);
+       mainView.getjPBCardCounter().setVisible(false);
        
        mainView.setLocationRelativeTo(null);
        mainView.setResizable(false);
+       
     }
     
     /**
@@ -52,6 +57,12 @@ public class MainViewController {
         mainView.getjTFPort().setEnabled(false);
         mainView.getjTFSpeed().setEnabled(false);
         mainView.getjTFSleep().setEnabled(false);
+        mainView.getjCBSound().setEnabled(false);
+        
+        //se carga la configuracion en este momento
+        if(mainView.getjCBSound().isSelected()){
+            Utils.SOUND_ACTIVE = true;
+        }
     }
     
     /**
@@ -62,16 +73,24 @@ public class MainViewController {
         Utils.BUFFER_SPEED = Integer.parseInt(mainView.getjTFSpeed().getText());
         Utils.SLEEP_TIME_SHORT = Integer.parseInt(mainView.getjTFSleep().getText());
         Utils.SLEEP_TIME_LONG = Utils.SLEEP_TIME_SHORT*5;
-        Main.startApp();
-        mainView.getjBGameStart().setEnabled(true);
+        if(Main.startApp()){
+            MainViewController.setInfoLabel("Serial Comm Iniciado en: "+Utils.comPort);
+            mainView.getjBGameStart().setEnabled(true);
+            mainView.getjBPortStart().setEnabled(false);
+            mainView.getjBPortStop().setEnabled(true);
+        }            
     }
     
     /**
      * Metodo que detiene la comunicacion
      */
     public static void stopComm(){
-        Main.stopApp();
-        mainView.getjBGameStart().setEnabled(false);
+        if(Main.stopApp()){
+            MainViewController.setInfoLabel("Serial Comm Finalizado");
+            mainView.getjBGameStart().setEnabled(false);
+            mainView.getjBPortStart().setEnabled(true);
+            mainView.getjBPortStop().setEnabled(false);
+        }            
     }
     
     /**
@@ -147,5 +166,18 @@ public class MainViewController {
         gameView.setMinimumSize(new Dimension(600, 600));
         gameView.setSize(600, 600);
         gameView.setVisible(true);
+    }
+    
+    public static void updateProgressBar(){
+        JProgressBar bar = mainView.getjPBCardCounter();
+
+            if(!bar.isVisible()){
+                bar.setVisible(true);
+            }
+            
+            int maxAmount = (Core.getMax()+1) * 7;
+            
+            int value = (int) (Core.getCardAmount()*100) / maxAmount;
+            bar.setValue(value);
     }
 }

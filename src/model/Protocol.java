@@ -37,14 +37,7 @@ public class Protocol {
      * @param trama conformado por 4 bytes donde los dos centrales conforman la informacion deseada
      */
     public static void processTrama(Trama trama){
-        
-//        try {
-//            //PARA TESTEAR
-//            Thread.sleep(Utils.SLEEP_TIME);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(Protocol.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        
+
         trama.printTrama();
         
         //se convierte el segmento de control en string para subdividirlo
@@ -85,8 +78,8 @@ public class Protocol {
             color = info.substring(2, 4);
             card = info.substring(4, 8);
             System.out.println(from+" "+to+" "+instruction+" "+direction+" "+color+" "+card);
-                
-                                   
+                        
+            
             //instruccion de carta a la mano
             if(Utils.binaryToInt(instruction)==Utils.CONTROL_CARD_HAND){
                 
@@ -95,7 +88,8 @@ public class Protocol {
                     
                     String lastCard = "El Jugador "+Core.getActual()+" ha tomado una carta.";
                     GameViewController.setLastCard(lastCard);
-                }
+                }       
+                
                 //si recibo carta a la mano y no soy yo
                 if(Utils.binaryToInt(from)!=Core.getLocal()){
                     //Core.setActual(Utils.binaryToInt(from));
@@ -114,7 +108,7 @@ public class Protocol {
                     if(Core.getPhase()==Utils.PHASE_INITIAL_CARDS){
                         if(Core.getCounter()<7){
                             //se obtiene la carta n a la mano
-                            //Core.setActual(Core.getLocal());
+                            
                             
                             newCard = null;
                             while(newCard==null){
@@ -422,6 +416,11 @@ public class Protocol {
                     +" Draw:"+Core.getDraw().size()+" Drop:"+Core.getDrop().size();
             MainViewController.setCardsLabel(tableInfo);
             
+            if(Core.getPhase() < Utils.PHASE_GAME){
+                //se actualiza barra de interfaz
+                MainViewController.updateProgressBar();
+            }
+
             //SI YA SE ESTA EN FASE DE JUEGO
             if(Core.getPhase() == Utils.PHASE_GAME){                                
                 //actualizar la mesa al pasar a fase juego
@@ -434,9 +433,9 @@ public class Protocol {
                 //anuncio de turno                 
                 if(Utils.binaryToInt(to) == Core.getLocal() ){
                     //si el turno es igual a local
-                    if((!Utils.Value.MAS_DOS.equals(Core.getDrop().showLastCard().getValue()) && !Utils.Value.MAS_CUATRO.equals(Core.getDrop().showLastCard().getValue())) || Utils.Value.NONE.equals(Utils.intToValue(Utils.binaryToInt(card)))){
+                    if((!Utils.Value.MAS_DOS.equals(Core.getDrop().showLastCard().getValue()) && !Utils.Value.MAS_CUATRO.equals(Core.getDrop().showLastCard().getValue())) || Utils.Value.NONE.equals(Utils.intToValue(Utils.binaryToInt(card))) || Core.getCardsPlayed() == 0){
                         //si la carta es distinta a +2 y +4 o es un pase de turno
-                        //pendiente si es el primer turno de juego
+                        //o es el primer turno de juego
                         GameViewController.setLocalInfo(Utils.INFO_MESSAGE_ISTURN);
                         Utils.textDialog(Utils.INFO_MESSAGE_ISTURN,GameViewController.getGameView());
                         
@@ -623,22 +622,22 @@ public class Protocol {
             
             //test de correccion de turno final
             Core.setActual(Utils.binaryToInt(from));
-            String test = "from :"+Utils.binaryToInt(from)+" actual: "+Core.getActual();
-            System.out.println(test);
+            //String test = "from :"+Utils.binaryToInt(from)+" actual: "+Core.getActual();
+            //System.out.println(test);
             
             
             Core.setPhase(Utils.PHASE_VICTORY);
             if(Core.isLocalTurn()){
-                System.out.println(Utils.INFO_MESSAGE_VICTORY_LOCAL+Core.winerPoints());
-                GameViewController.setLocalInfo(Utils.INFO_MESSAGE_VICTORY_LOCAL+Core.winerPoints());
-                Utils.textDialog(Utils.INFO_MESSAGE_VICTORY_LOCAL+Core.winerPoints(), GameViewController.getGameView());
+                System.out.println(Utils.INFO_MESSAGE_VICTORY_LOCAL+Core.getWinerPoints());
+                GameViewController.setLocalInfo(Utils.INFO_MESSAGE_VICTORY_LOCAL+Core.getWinerPoints());
+                Utils.textDialog(Utils.INFO_MESSAGE_VICTORY_LOCAL+Core.getWinerPoints(), GameViewController.getGameView());
                 
                 //playSound Victory
                 Utils.playSound(Utils.PATH_SOUND_VICTORY);
             }else{
-                System.out.println("El Jugador "+Core.getActual()+" GANO!! Puntaje: "+Core.winerPoints());
-                GameViewController.setLocalInfo("El Jugador "+Core.getActual()+" GANO!! Puntaje: "+Core.winerPoints());
-                Utils.textDialog("El Jugador "+Core.getActual()+" GANO!! Puntaje: "+Core.winerPoints(), GameViewController.getGameView());
+                System.out.println("El Jugador "+Core.getActual()+" GANO!! Puntaje: "+Core.getWinerPoints());
+                GameViewController.setLocalInfo("El Jugador "+Core.getActual()+" GANO!! Puntaje: "+Core.getWinerPoints());
+                Utils.textDialog("El Jugador "+Core.getActual()+" GANO!! Puntaje: "+Core.getWinerPoints(), GameViewController.getGameView());
                 SerialComm.sendTrama(trama);
             }
         }
