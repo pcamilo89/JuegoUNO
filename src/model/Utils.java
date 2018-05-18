@@ -85,6 +85,7 @@ public class Utils {
     public static final String PATH_SOUND_ALERT = "resources/Alert.wav";
     public static final String PATH_SOUND_TURN = "resources/Turn.wav";
     public static final String PATH_SOUND_CARD = "resources/CardSound.wav";
+    public static final String PATH_SOUND_DIRECTION = "resources/Rewind.wav";
     
     /**
      * Metodo que imprime cada caracter recibido en el buffer y identifica las flags

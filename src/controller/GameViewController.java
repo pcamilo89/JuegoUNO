@@ -263,6 +263,10 @@ public class GameViewController {
             Image newimg = image.getScaledInstance(350 , 300,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
             gameView.getjLDirection().setIcon(new ImageIcon(newimg));
             
+            if(Core.getCardsPlayed() > 0){
+                Utils.playSound(Utils.PATH_SOUND_DIRECTION);
+            }
+            
         }
     }
     
