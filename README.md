@@ -14,7 +14,7 @@ Proyecto para la catedra de Redes de Computadores I
 </p>
 
 ## Documentación
-La descripción de las [Caracteristicas y Protocolo](docs/Caracteristicas%20y%20Protocolo.pdf) se encuentran en dicho enlace.
+La descripción de las caracteristicas del juego implementado y el protocolo se encuentran en el siguiente [link](docs/Caracteristicas%20y%20Protocolo.pdf) 
 
 ## Requerimientos
 
