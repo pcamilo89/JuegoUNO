@@ -18,6 +18,7 @@ La descripción de las caracteristicas del juego implementado y el protocolo se 
 
 ## Requerimientos
 
+- Java 8
 - [RXTX](http://rxtx.qbang.org/wiki/index.php/Main_Page) es una librería Java, usando una implementación nativa (vía JNI), proporcionando comunicación serial y paralela para el Kit de herramientas de desarrollo de Java (JDK).
 - Puerto Serial en cada computador a utilizar.
 - Cable Serial simple para 2 jugadores o cable Serial en configuración de anillo unidireccional para 3-4 jugadores.
